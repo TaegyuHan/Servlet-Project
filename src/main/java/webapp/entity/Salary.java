@@ -9,6 +9,8 @@ public class Salary {
     private Date fromDate;
     private Date toDate;
 
+    public Salary() {}
+
     public Salary(int empNo, int salary, Date fromDate, Date toDate) {
         this.empNo = empNo;
         this.salary = salary;

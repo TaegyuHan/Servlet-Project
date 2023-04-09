@@ -11,6 +11,8 @@ public class Employee {
     private Gender gender;
     private Date hireDate;
 
+    public Employee() {};
+
     public Employee(int empNo, Date birthDate, String firstName, String lastName, Gender gender, Date hireDate) {
         this.empNo = empNo;
         this.birthDate = birthDate;
@@ -92,7 +94,7 @@ public class Employee {
         }
 
         public Employee build() {
-            return new Employee(this);
+            return new Employee();
         }
     }
 }

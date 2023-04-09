@@ -9,8 +9,7 @@ public class Title {
     private Date fromDate;
     private Date toDate;
 
-    public Title() {
-    }
+    public Title() {}
 
     public Title(int empNo, String title, Date fromDate, Date toDate) {
         this.empNo = empNo;
