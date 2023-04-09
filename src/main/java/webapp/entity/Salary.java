@@ -34,6 +34,16 @@ public class Salary {
         return toDate;
     }
 
+    @Override
+    public String toString() {
+        return "Salary{" +
+                "empNo=" + empNo +
+                ", salary=" + salary +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                '}';
+    }
+
     public Salary(Builder builder) {
         this.empNo = builder.empNo;
         this.salary = builder.salary;

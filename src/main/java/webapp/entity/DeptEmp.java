@@ -34,6 +34,16 @@ public class DeptEmp {
         return toDate;
     }
 
+    @Override
+    public String toString() {
+        return "DeptEmp{" +
+                "empNo=" + empNo +
+                ", deptNo='" + deptNo + '\'' +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                '}';
+    }
+
     private DeptEmp(Builder builder) {
         empNo = builder.empNo;
         deptNo = builder.deptNo;

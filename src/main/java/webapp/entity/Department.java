@@ -20,6 +20,14 @@ public class Department {
         return deptName;
     }
 
+    @Override
+    public String toString() {
+        return "Department{" +
+                "deptNo='" + deptNo + '\'' +
+                ", deptName='" + deptName + '\'' +
+                '}';
+    }
+
     private Department(Builder builder) {
         this.deptNo = builder.deptNo;
         this.deptName = builder.deptName;

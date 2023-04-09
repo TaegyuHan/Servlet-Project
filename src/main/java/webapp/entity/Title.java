@@ -34,6 +34,16 @@ public class Title {
         return toDate;
     }
 
+    @Override
+    public String toString() {
+        return "Title{" +
+                "empNo=" + empNo +
+                ", title='" + title + '\'' +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                '}';
+    }
+
     private Title(Builder builder) {
         this.empNo = builder.empNo;
         this.title = builder.title;

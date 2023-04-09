@@ -46,6 +46,18 @@ public class Employee {
         return hireDate;
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "empNo=" + empNo +
+                ", birthDate=" + birthDate +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender=" + gender +
+                ", hireDate=" + hireDate +
+                '}';
+    }
+
     private Employee(Builder builder) {
         this.empNo = builder.empNo;
         this.birthDate = builder.birthDate;
