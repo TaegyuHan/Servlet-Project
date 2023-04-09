@@ -9,7 +9,8 @@ public class DeptEmp {
     private Date fromDate;
     private Date toDate;
 
-    public DeptEmp() {}
+    public DeptEmp() {
+    }
 
     public DeptEmp(int empNo, String deptNo, Date fromDate, Date toDate) {
         this.empNo = empNo;
@@ -22,16 +23,32 @@ public class DeptEmp {
         return empNo;
     }
 
+    public void setEmpNo(int empNo) {
+        this.empNo = empNo;
+    }
+
     public String getDeptNo() {
         return deptNo;
+    }
+
+    public void setDeptNo(String deptNo) {
+        this.deptNo = deptNo;
     }
 
     public Date getFromDate() {
         return fromDate;
     }
 
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
+    }
+
     public Date getToDate() {
         return toDate;
+    }
+
+    public void setToDate(Date toDate) {
+        this.toDate = toDate;
     }
 
     @Override
