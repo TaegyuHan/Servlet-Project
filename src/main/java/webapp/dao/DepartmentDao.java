@@ -3,6 +3,7 @@ package webapp.dao;
 import webapp.entity.Department;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DepartmentDao {
 
@@ -10,7 +11,7 @@ public interface DepartmentDao {
 
     List<Department> findAll();
 
-    Department findByDeptNo(String deptNo);
+    Optional<Department> findByDeptNo(String deptNo);
 
     int update(Department department);
 

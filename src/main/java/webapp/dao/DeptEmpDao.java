@@ -4,6 +4,7 @@ import webapp.entity.DeptEmp;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface DeptEmpDao {
 
@@ -11,7 +12,7 @@ public interface DeptEmpDao {
 
     List<DeptEmp> findAll();
 
-    DeptEmp findDeptEmpByNo(int empNo, String deptNo, LocalDate fromDate);
+    Optional<DeptEmp> findDeptEmpByNo(int empNo, String deptNo, LocalDate fromDate);
 
     int update(DeptEmp deptEmp);
 

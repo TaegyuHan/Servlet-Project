@@ -3,6 +3,7 @@ package webapp.dao;
 import webapp.entity.Salary;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SalariesDao {
 
@@ -10,7 +11,7 @@ public interface SalariesDao {
 
     List<Salary> findAll();
 
-    Salary findById(int empNo);
+    Optional<Salary> findById(int empNo);
 
     int update(Salary salaries);
 

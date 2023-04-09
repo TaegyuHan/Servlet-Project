@@ -3,6 +3,7 @@ package webapp.dao;
 import webapp.entity.Employee;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EmployeeDao {
 
@@ -10,7 +11,7 @@ public interface EmployeeDao {
 
     List<Employee> findAll();
 
-    Employee findByNo(int id);
+    Optional<Employee> findByNo(int id);
 
     int update(Employee employee);
 
