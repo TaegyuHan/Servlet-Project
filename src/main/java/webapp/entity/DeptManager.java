@@ -1,17 +1,19 @@
-package entity;
+package webapp.entity;
 
 import java.time.LocalDate;
 
-public class Salary {
+public class DeptManager {
 
     private int empNo;
-    private int salary;
+    private String deptNo;
     private LocalDate fromDate;
     private LocalDate toDate;
 
-    public Salary(int empNo, int salary, LocalDate fromDate, LocalDate toDate) {
+    public DeptManager() {}
+
+    public DeptManager(int empNo, String deptNo, LocalDate fromDate, LocalDate toDate) {
         this.empNo = empNo;
-        this.salary = salary;
+        this.deptNo = deptNo;
         this.fromDate = fromDate;
         this.toDate = toDate;
     }
@@ -20,8 +22,8 @@ public class Salary {
         return empNo;
     }
 
-    public int getSalary() {
-        return salary;
+    public String getDeptNo() {
+        return deptNo;
     }
 
     public LocalDate getFromDate() {
@@ -32,16 +34,16 @@ public class Salary {
         return toDate;
     }
 
-    public Salary(Builder builder) {
+    private DeptManager(Builder builder) {
         this.empNo = builder.empNo;
-        this.salary = builder.salary;
+        this.deptNo = builder.deptNo;
         this.fromDate = builder.fromDate;
         this.toDate = builder.toDate;
     }
 
     public static class Builder {
         private int empNo;
-        private int salary;
+        private String deptNo;
         private LocalDate fromDate;
         private LocalDate toDate;
 
@@ -50,8 +52,8 @@ public class Salary {
             return this;
         }
 
-        public Builder salary(int salary) {
-            this.salary = salary;
+        public Builder deptNo(String deptNo) {
+            this.deptNo = deptNo;
             return this;
         }
 
@@ -65,8 +67,8 @@ public class Salary {
             return this;
         }
 
-        public Salary build() {
-            return new Salary(this);
+        public DeptManager build() {
+            return new DeptManager(this);
         }
     }
 }

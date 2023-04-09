@@ -1,4 +1,4 @@
-package entity;
+package webapp.entity;
 
 public class Department {
 
