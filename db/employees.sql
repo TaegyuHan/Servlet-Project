@@ -20,7 +20,7 @@
 --  To the best of our knowledge, this data is fabricated, and
 --  it does not correspond to real people. 
 --  Any similarity to existing people is purely coincidental.
--- 
+--
 
 DROP DATABASE IF EXISTS employees;
 CREATE DATABASE IF NOT EXISTS employees;
