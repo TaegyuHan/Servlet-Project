@@ -15,6 +15,6 @@ public interface DeptManagerDao {
 
     int update(DeptManager deptManager);
 
-    int delete(int empNo, String deptNo);
+    int delete(DeptManager deptManager);
 }
 

@@ -13,7 +13,9 @@ public interface DepartmentDao {
 
     Optional<Department> findByDeptNo(String deptNo);
 
+    Optional<Department> findByDeptName(String deptName);
+
     int update(Department department);
 
-    int delete(String deptNo);
+    int delete(Department department);
 }
