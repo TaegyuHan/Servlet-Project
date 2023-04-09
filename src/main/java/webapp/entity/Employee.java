@@ -94,7 +94,7 @@ public class Employee {
         }
 
         public Employee build() {
-            return new Employee();
+            return new Employee(this);
         }
     }
 }
