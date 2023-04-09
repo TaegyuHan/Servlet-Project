@@ -1,15 +1,15 @@
 package webapp.entity;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Salary {
 
     private int empNo;
     private int salary;
-    private LocalDate fromDate;
-    private LocalDate toDate;
+    private Date fromDate;
+    private Date toDate;
 
-    public Salary(int empNo, int salary, LocalDate fromDate, LocalDate toDate) {
+    public Salary(int empNo, int salary, Date fromDate, Date toDate) {
         this.empNo = empNo;
         this.salary = salary;
         this.fromDate = fromDate;
@@ -24,11 +24,11 @@ public class Salary {
         return salary;
     }
 
-    public LocalDate getFromDate() {
+    public Date getFromDate() {
         return fromDate;
     }
 
-    public LocalDate getToDate() {
+    public Date getToDate() {
         return toDate;
     }
 
@@ -42,8 +42,8 @@ public class Salary {
     public static class Builder {
         private int empNo;
         private int salary;
-        private LocalDate fromDate;
-        private LocalDate toDate;
+        private Date fromDate;
+        private Date toDate;
 
         public Builder empNo(int empNo) {
             this.empNo = empNo;
@@ -55,12 +55,12 @@ public class Salary {
             return this;
         }
 
-        public Builder fromDate(LocalDate fromDate) {
+        public Builder fromDate(Date fromDate) {
             this.fromDate = fromDate;
             return this;
         }
 
-        public Builder toDate(LocalDate toDate) {
+        public Builder toDate(Date toDate) {
             this.toDate = toDate;
             return this;
         }

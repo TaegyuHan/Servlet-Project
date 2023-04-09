@@ -1,17 +1,17 @@
 package webapp.entity;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class DeptManager {
 
     private int empNo;
     private String deptNo;
-    private LocalDate fromDate;
-    private LocalDate toDate;
+    private Date fromDate;
+    private Date toDate;
 
     public DeptManager() {}
 
-    public DeptManager(int empNo, String deptNo, LocalDate fromDate, LocalDate toDate) {
+    public DeptManager(int empNo, String deptNo, Date fromDate, Date toDate) {
         this.empNo = empNo;
         this.deptNo = deptNo;
         this.fromDate = fromDate;
@@ -26,11 +26,11 @@ public class DeptManager {
         return deptNo;
     }
 
-    public LocalDate getFromDate() {
+    public Date getFromDate() {
         return fromDate;
     }
 
-    public LocalDate getToDate() {
+    public Date getToDate() {
         return toDate;
     }
 
@@ -44,8 +44,8 @@ public class DeptManager {
     public static class Builder {
         private int empNo;
         private String deptNo;
-        private LocalDate fromDate;
-        private LocalDate toDate;
+        private Date fromDate;
+        private Date toDate;
 
         public Builder empNo(int empNo) {
             this.empNo = empNo;
@@ -57,12 +57,12 @@ public class DeptManager {
             return this;
         }
 
-        public Builder fromDate(LocalDate fromDate) {
+        public Builder fromDate(Date fromDate) {
             this.fromDate = fromDate;
             return this;
         }
 
-        public Builder toDate(LocalDate toDate) {
+        public Builder toDate(Date toDate) {
             this.toDate = toDate;
             return this;
         }

@@ -1,17 +1,18 @@
 package webapp.entity;
 
-import java.time.LocalDate;
+
+import java.util.Date;
 
 public class Employee {
 
     private int empNo;
-    private LocalDate birthDate;
+    private Date birthDate;
     private String firstName;
     private String lastName;
     private Gender gender;
-    private LocalDate hireDate;
+    private Date hireDate;
 
-    public Employee(int empNo, LocalDate birthDate, String firstName, String lastName, Gender gender, LocalDate hireDate) {
+    public Employee(int empNo, Date birthDate, String firstName, String lastName, Gender gender, Date hireDate) {
         this.empNo = empNo;
         this.birthDate = birthDate;
         this.firstName = firstName;
@@ -24,7 +25,7 @@ public class Employee {
         return empNo;
     }
 
-    public LocalDate getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
@@ -40,7 +41,7 @@ public class Employee {
         return gender;
     }
 
-    public LocalDate getHireDate() {
+    public Date getHireDate() {
         return hireDate;
     }
 
@@ -55,18 +56,18 @@ public class Employee {
 
     public static class Builder {
         private int empNo;
-        private LocalDate birthDate;
+        private Date birthDate;
         private String firstName;
         private String lastName;
         private Gender gender;
-        private LocalDate hireDate;
+        private Date hireDate;
 
         public Builder empNo(int empNo) {
             this.empNo = empNo;
             return this;
         }
 
-        public Builder birthDate(LocalDate birthDate) {
+        public Builder birthDate(Date birthDate) {
             this.birthDate = birthDate;
             return this;
         }
@@ -86,7 +87,7 @@ public class Employee {
             return this;
         }
 
-        public Builder hireDate(LocalDate hireDate) {
+        public Builder hireDate(Date hireDate) {
             this.hireDate = hireDate;
             return this;
         }
