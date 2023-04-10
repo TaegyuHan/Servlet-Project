@@ -10,6 +10,11 @@
 
     <dependencies>
 
+        <!--
+            아파치 추가 저장 공간
+            : C:\Users\gksxo\Desktop\Folder\github\Servlet-Project\apache-tomcat-9.0.73\lib
+         -->
+
         <!-- servlet -->
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>
@@ -42,12 +47,7 @@
             <artifactId>junit5-engine</artifactId>
             <version>5.0.0-ALPHA</version>
         </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.9.2</version>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -55,6 +55,19 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Json 파싱 라이브러리 -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20230227</version>
+        </dependency>
     </dependencies>
 
     <properties>
