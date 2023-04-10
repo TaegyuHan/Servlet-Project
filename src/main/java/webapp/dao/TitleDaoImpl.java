@@ -11,17 +11,17 @@ import java.util.List;
 public class TitleDaoImpl implements TitleDao {
 
     @Override
-    public int create(Title title) {
+    public int create(Title entity) {
 
         String sql = "INSERT INTO titles (emp_no, title, from_date, to_date) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = MariaDBConnectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, title.getEmpNo());
-            pstmt.setString(2, title.getTitle());
-            pstmt.setDate(3, title.getFromDate());
-            pstmt.setDate(4, title.getToDate());
+            pstmt.setInt(1, entity.getEmpNo());
+            pstmt.setString(2, entity.getTitle());
+            pstmt.setDate(3, entity.getFromDate());
+            pstmt.setDate(4, entity.getToDate());
 
             return pstmt.executeUpdate();
 
@@ -156,17 +156,17 @@ public class TitleDaoImpl implements TitleDao {
     }
 
     @Override
-    public int update(Title title) {
+    public int update(Title entity) {
 
         String sql = "UPDATE titles SET to_date = ? WHERE emp_no = ? AND title = ? AND from_date = ?";
 
         try (Connection conn = MariaDBConnectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setDate(1, title.getToDate());
-            pstmt.setInt(2, title.getEmpNo());
-            pstmt.setString(3, title.getTitle());
-            pstmt.setDate(4, title.getFromDate());
+            pstmt.setDate(1, entity.getToDate());
+            pstmt.setInt(2, entity.getEmpNo());
+            pstmt.setString(3, entity.getTitle());
+            pstmt.setDate(4, entity.getFromDate());
 
             return pstmt.executeUpdate();
 
@@ -176,16 +176,16 @@ public class TitleDaoImpl implements TitleDao {
     }
 
     @Override
-    public int delete(Title title) {
+    public int delete(Title entity) {
 
         String sql = "DELETE FROM titles WHERE emp_no = ? AND title = ? AND from_date = ?";
 
         try (Connection conn = MariaDBConnectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, title.getEmpNo());
-            pstmt.setString(2, title.getTitle());
-            pstmt.setDate(3, title.getFromDate());
+            pstmt.setInt(1, entity.getEmpNo());
+            pstmt.setString(2, entity.getTitle());
+            pstmt.setDate(3, entity.getFromDate());
 
             return pstmt.executeUpdate();
 
