@@ -1,6 +1,5 @@
 package webapp.dao;
 
-
 import webapp.config.MariaDBConnectionPool;
 import webapp.entity.Employee;
 import webapp.entity.Gender;
@@ -9,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 public class EmployeeDaoImpl implements EmployeeDao {
 
@@ -66,7 +66,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public Optional<Employee> findByNo(int id) {
+    public Optional<Employee> findByEmpNo(int id) {
 
         String sql = "SELECT * FROM employees " +
                 "WHERE emp_no = ?";
@@ -99,7 +99,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public int update(Employee employee) {
+    public int update(Employee entity) {
 
         String sql = "UPDATE employees " +
                 "SET birth_date = ?, " +
@@ -112,12 +112,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
         try (Connection conn = MariaDBConnectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setDate(1, employee.getBirthDate());
-            pstmt.setString(2, employee.getFirstName());
-            pstmt.setString(3, employee.getLastName());
-            pstmt.setString(4, employee.getGender().toString());
-            pstmt.setDate(5, employee.getHireDate());
-            pstmt.setInt(6, employee.getEmpNo());
+            pstmt.setDate(1, entity.getBirthDate());
+            pstmt.setString(2, entity.getFirstName());
+            pstmt.setString(3, entity.getLastName());
+            pstmt.setString(4, entity.getGender().toString());
+            pstmt.setDate(5, entity.getHireDate());
+            pstmt.setInt(6, entity.getEmpNo());
 
             return pstmt.executeUpdate();
 
@@ -127,14 +127,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public int delete(Employee employee) {
+    public int delete(Employee entity) {
 
         String sql = "DELETE FROM employees WHERE emp_no = ?";
 
         try (Connection conn = MariaDBConnectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, employee.getEmpNo());
+            pstmt.setInt(1, entity.getEmpNo());
 
             return pstmt.executeUpdate();
 

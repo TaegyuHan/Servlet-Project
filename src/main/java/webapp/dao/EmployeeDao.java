@@ -5,15 +5,16 @@ import webapp.entity.Employee;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface EmployeeDao {
 
-    int create(Employee employee);
+    int create(Employee entity);
 
     List<Employee> findAll();
 
-    Optional<Employee> findByNo(int id);
+    Optional<Employee> findByEmpNo(int id);
 
-    int update(Employee employee);
+    int update(Employee entity);
 
-    int delete(Employee employee);
+    int delete(Employee entity);
 }
