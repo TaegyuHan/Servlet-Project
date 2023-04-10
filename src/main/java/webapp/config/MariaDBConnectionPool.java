@@ -20,7 +20,7 @@ public class MariaDBConnectionPool {
         config.setUsername(DB_USER);
         config.setPassword(DB_PASSWORD);
         config.setMaximumPoolSize(10);
-        config.setMinimumIdle(5);
+        config.setMinimumIdle(10);
         config.setConnectionTimeout(30000);
         config.setIdleTimeout(600000);
         config.setMaxLifetime(1800000);
