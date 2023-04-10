@@ -5,16 +5,21 @@ import webapp.entity.DeptManager;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface DeptManagerDao {
 
-    int create(DeptManager deptManager);
+    int create(DeptManager entity);
 
     List<DeptManager> findAll();
 
     Optional<DeptManager> findByEmpNoAndDeptNo(int empNo, String deptNo);
 
-    int update(DeptManager deptManager);
+    List<DeptManager> findByEmpNo(int empNo);
 
-    int delete(DeptManager deptManager);
+    List<DeptManager> findByDeptNo(String deptNo);
+
+    int update(DeptManager entity);
+
+    int delete(DeptManager entity);
 }
 

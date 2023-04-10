@@ -8,20 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 public class DeptManagerDaoImpl implements DeptManagerDao {
 
     @Override
-    public int create(DeptManager deptManager) {
+    public int create(DeptManager entity) {
 
         String sql = "INSERT INTO dept_manager (dept_no, emp_no, from_date, to_date) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = MariaDBConnectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, deptManager.getDeptNo());
-            pstmt.setInt(2, deptManager.getEmpNo());
-            pstmt.setDate(3, deptManager.getFromDate());
-            pstmt.setDate(4, deptManager.getToDate());
+            pstmt.setString(1, entity.getDeptNo());
+            pstmt.setInt(2, entity.getEmpNo());
+            pstmt.setDate(3, entity.getFromDate());
+            pstmt.setDate(4, entity.getToDate());
 
             return pstmt.executeUpdate();
 
@@ -91,17 +92,79 @@ public class DeptManagerDaoImpl implements DeptManagerDao {
     }
 
     @Override
-    public int update(DeptManager deptManager) {
+    public List<DeptManager> findByEmpNo(int empNo) {
+
+        String sql = "SELECT * FROM dept_manager WHERE emp_no = ?";
+
+        try (Connection conn = MariaDBConnectionPool.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, empNo);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            List<DeptManager> deptManagerList = new ArrayList<>();
+
+            while (rs.next()) {
+                DeptManager deptManager = new DeptManager.Builder()
+                        .empNo(rs.getInt("emp_no"))
+                        .deptNo(rs.getString("dept_no"))
+                        .fromDate(rs.getDate("from_date"))
+                        .toDate(rs.getDate("to_date"))
+                        .build();
+                deptManagerList.add(deptManager);
+            }
+
+            return deptManagerList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<DeptManager> findByDeptNo(String deptNo) {
+
+        String sql = "SELECT * FROM dept_manager WHERE dept_no = ?";
+
+        try (Connection conn = MariaDBConnectionPool.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, deptNo);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            List<DeptManager> deptManagerList = new ArrayList<>();
+
+            while (rs.next()) {
+                DeptManager deptManager = new DeptManager.Builder()
+                        .empNo(rs.getInt("emp_no"))
+                        .deptNo(rs.getString("dept_no"))
+                        .fromDate(rs.getDate("from_date"))
+                        .toDate(rs.getDate("to_date"))
+                        .build();
+                deptManagerList.add(deptManager);
+            }
+
+            return deptManagerList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int update(DeptManager entity) {
 
         String sql = "UPDATE dept_manager SET from_date = ?, to_date = ? WHERE emp_no = ? AND dept_no = ?";
 
         try (Connection conn = MariaDBConnectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setDate(1, deptManager.getFromDate());
-            pstmt.setDate(2, deptManager.getToDate());
-            pstmt.setInt(3, deptManager.getEmpNo());
-            pstmt.setString(4, deptManager.getDeptNo());
+            pstmt.setDate(1, entity.getFromDate());
+            pstmt.setDate(2, entity.getToDate());
+            pstmt.setInt(3, entity.getEmpNo());
+            pstmt.setString(4, entity.getDeptNo());
 
             return pstmt.executeUpdate();
 
@@ -111,15 +174,15 @@ public class DeptManagerDaoImpl implements DeptManagerDao {
     }
 
     @Override
-    public int delete(DeptManager deptManager) {
+    public int delete(DeptManager entity) {
 
         String sql = "DELETE FROM dept_manager WHERE emp_no = ? AND dept_no = ?";
 
         try (Connection conn = MariaDBConnectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, deptManager.getEmpNo());
-            pstmt.setString(2, deptManager.getDeptNo());
+            pstmt.setInt(1, entity.getEmpNo());
+            pstmt.setString(2, entity.getDeptNo());
 
             return pstmt.executeUpdate();
 
