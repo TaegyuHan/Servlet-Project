@@ -11,15 +11,15 @@ import java.util.Optional;
 public class DepartmentDaoImpl implements DepartmentDao {
 
     @Override
-    public int create(Department department) {
+    public int create(Department entity) {
 
         String sql = "INSERT INTO departments (dept_no, dept_name) VALUES (?, ?)";
 
         try (Connection conn = MariaDBConnectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, department.getDeptNo());
-            pstmt.setString(2, department.getDeptName());
+            pstmt.setString(1, entity.getDeptNo());
+            pstmt.setString(2, entity.getDeptName());
 
             return pstmt.executeUpdate();
 
@@ -109,15 +109,15 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
-    public int update(Department department) {
+    public int update(Department entity) {
 
         String sql = "UPDATE departments SET dept_name = ? WHERE dept_no = ?";
 
         try (Connection conn = MariaDBConnectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, department.getDeptName());
-            pstmt.setString(2, department.getDeptNo());
+            pstmt.setString(1, entity.getDeptName());
+            pstmt.setString(2, entity.getDeptNo());
 
             return pstmt.executeUpdate();
 
@@ -127,14 +127,14 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
-    public int delete(Department department) {
+    public int delete(Department entity) {
 
         String sql = "DELETE FROM departments WHERE dept_no = ?";
 
         try (Connection conn = MariaDBConnectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, department.getDeptNo());
+            pstmt.setString(1, entity.getDeptNo());
 
             return pstmt.executeUpdate();
 
