@@ -8,11 +8,6 @@ public class Department {
     public Department() {
     }
 
-    public Department(String deptNo, String deptName) {
-        this.deptNo = deptNo;
-        this.deptName = deptName;
-    }
-
     public String getDeptNo() {
         return deptNo;
     }
@@ -37,27 +32,22 @@ public class Department {
                 '}';
     }
 
-    private Department(Builder builder) {
-        this.deptNo = builder.deptNo;
-        this.deptName = builder.deptName;
-    }
-
     public static class Builder {
-        private String deptNo;
-        private String deptName;
+
+        private Department entity = new Department();
 
         public Builder deptNo(String deptNo) {
-            this.deptNo = deptNo;
+            entity.setDeptNo(deptNo);
             return this;
         }
 
         public Builder deptName(String deptName) {
-            this.deptName = deptName;
+            entity.setDeptName(deptName);
             return this;
         }
 
         public Department build() {
-            return new Department(this);
+            return entity;
         }
     }
 }

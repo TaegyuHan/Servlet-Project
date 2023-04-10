@@ -11,13 +11,6 @@ public class DeptManager {
 
     public DeptManager() {}
 
-    public DeptManager(int empNo, String deptNo, Date fromDate, Date toDate) {
-        this.empNo = empNo;
-        this.deptNo = deptNo;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
-    }
-
     public int getEmpNo() {
         return empNo;
     }
@@ -60,41 +53,32 @@ public class DeptManager {
                 '}';
     }
 
-    private DeptManager(Builder builder) {
-        this.empNo = builder.empNo;
-        this.deptNo = builder.deptNo;
-        this.fromDate = builder.fromDate;
-        this.toDate = builder.toDate;
-    }
-
     public static class Builder {
-        private int empNo;
-        private String deptNo;
-        private Date fromDate;
-        private Date toDate;
+
+        private DeptManager entity = new DeptManager();
 
         public Builder empNo(int empNo) {
-            this.empNo = empNo;
+            entity.setEmpNo(empNo);
             return this;
         }
 
         public Builder deptNo(String deptNo) {
-            this.deptNo = deptNo;
+            entity.setDeptNo(deptNo);
             return this;
         }
 
         public Builder fromDate(Date fromDate) {
-            this.fromDate = fromDate;
+            entity.setFromDate(fromDate);
             return this;
         }
 
         public Builder toDate(Date toDate) {
-            this.toDate = toDate;
+            entity.setToDate(toDate);
             return this;
         }
 
         public DeptManager build() {
-            return new DeptManager(this);
+            return entity;
         }
     }
 }

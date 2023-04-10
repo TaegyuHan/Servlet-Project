@@ -11,13 +11,6 @@ public class Title {
 
     public Title() {}
 
-    public Title(int empNo, String title, Date fromDate, Date toDate) {
-        this.empNo = empNo;
-        this.title = title;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
-    }
-
     public int getEmpNo() {
         return empNo;
     }
@@ -60,41 +53,32 @@ public class Title {
                 '}';
     }
 
-    private Title(Builder builder) {
-        this.empNo = builder.empNo;
-        this.title = builder.title;
-        this.fromDate = builder.fromDate;
-        this.toDate = builder.toDate;
-    }
-
     public static class Builder {
-        private int empNo;
-        private String title;
-        private Date fromDate;
-        private Date toDate;
+
+        private Title entity = new Title();
 
         public Builder empNo(int empNo) {
-            this.empNo = empNo;
+            entity.setEmpNo(empNo);
             return this;
         }
 
         public Builder title(String title) {
-            this.title = title;
+            entity.setTitle(title);
             return this;
         }
 
         public Builder fromDate(Date fromDate) {
-            this.fromDate = fromDate;
+            entity.setFromDate(fromDate);
             return this;
         }
 
         public Builder toDate(Date toDate) {
-            this.toDate = toDate;
+            entity.setToDate(toDate);
             return this;
         }
 
         public Title build() {
-            return new Title(this);
+            return entity;
         }
     }
 }

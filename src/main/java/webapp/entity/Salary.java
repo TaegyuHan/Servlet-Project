@@ -11,13 +11,6 @@ public class Salary {
 
     public Salary() {}
 
-    public Salary(int empNo, int salary, Date fromDate, Date toDate) {
-        this.empNo = empNo;
-        this.salary = salary;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
-    }
-
     public int getEmpNo() {
         return empNo;
     }
@@ -60,41 +53,32 @@ public class Salary {
                 '}';
     }
 
-    public Salary(Builder builder) {
-        this.empNo = builder.empNo;
-        this.salary = builder.salary;
-        this.fromDate = builder.fromDate;
-        this.toDate = builder.toDate;
-    }
-
     public static class Builder {
-        private int empNo;
-        private int salary;
-        private Date fromDate;
-        private Date toDate;
+
+        private Salary entity = new Salary();
 
         public Builder empNo(int empNo) {
-            this.empNo = empNo;
+            entity.setEmpNo(empNo);
             return this;
         }
 
         public Builder salary(int salary) {
-            this.salary = salary;
+            entity.setSalary(salary);
             return this;
         }
 
         public Builder fromDate(Date fromDate) {
-            this.fromDate = fromDate;
+            entity.setFromDate(fromDate);
             return this;
         }
 
         public Builder toDate(Date toDate) {
-            this.toDate = toDate;
+            entity.setToDate(toDate);
             return this;
         }
 
         public Salary build() {
-            return new Salary(this);
+            return entity;
         }
     }
 }
