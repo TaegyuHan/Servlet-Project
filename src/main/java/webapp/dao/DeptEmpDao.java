@@ -11,6 +11,10 @@ public interface DeptEmpDao {
 
     List<DeptEmp> findAll();
 
+    List<DeptEmp> findByEmpNo(int empNo);
+
+    List<DeptEmp> findByDeptNo(String deptNo);
+
     Optional<DeptEmp> findByEmpNoAndDeptNo(int empNo, String deptNo);
 
     int update(DeptEmp deptEmp);
