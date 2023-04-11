@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +37,6 @@ public class DepartmentServlet extends HttpServlet {
         }
 
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().println("Data received successfully.");
     }
 
     @Override
@@ -49,21 +47,16 @@ public class DepartmentServlet extends HttpServlet {
         Optional<String> optDeptName = Optional.ofNullable(request.getParameter("dept_name"));
 
         if (optDeptNo.isEmpty() && optDeptName.isEmpty()) {
-
             List<DepartmentDto> dtos = service.searchAll();
-
-            System.out.println(Arrays.toString(dtos.toArray()));
 
         } else if (optDeptNo.isPresent()) {
             Optional<DepartmentDto> dto = service.searchByDeptNo(optDeptNo.get());
 
-            System.out.println(dto.get());
-
         } else if (optDeptName.isPresent()) {
             Optional<DepartmentDto> dto = service.searchByDeptName(optDeptName.get());
-
-            System.out.println(dto.get());
         }
+
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override

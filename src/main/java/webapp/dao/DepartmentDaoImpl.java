@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 public class DepartmentDaoImpl implements DepartmentDao {
 
     @Override
@@ -74,6 +75,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
                                 .build()
                 );
             }
+
             return Optional.empty();
 
         } catch (SQLException e) {
