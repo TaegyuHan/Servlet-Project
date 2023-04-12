@@ -2,14 +2,11 @@ package webapp.dto;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import webapp.entity.Salary;
 import webapp.util.ReadFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -83,41 +80,6 @@ public class SalaryDto {
         } catch (JSONException e) {
             return Optional.empty();
         }
-    }
-
-    public Salary toEntity() {
-        return new Salary.Builder()
-                .empNo(this.empNo)
-                .salary(this.salary)
-                .fromDate(this.fromDate)
-                .toDate(this.toDate)
-                .build();
-    }
-
-    public static List<SalaryDto> entitiesToDtos(List<Salary> entities) {
-
-        List<SalaryDto> dtos = new ArrayList<>();
-
-        for (Salary entity : entities) {
-            dtos.add(SalaryDto.entityToDto(entity));
-        }
-
-        return dtos;
-    }
-
-    public static SalaryDto entityToDto(Salary entity) {
-        return new SalaryDto.Builder()
-                .empNo(entity.getEmpNo())
-                .salary(entity.getSalary())
-                .fromDate(entity.getFromDate())
-                .toDate(entity.getToDate())
-                .build();
-    }
-
-    public static Optional<SalaryDto> entityToDto(Optional<Salary> optEntity) {
-        return Optional.ofNullable(
-                entityToDto(optEntity.get())
-        );
     }
 
     public static class Builder {

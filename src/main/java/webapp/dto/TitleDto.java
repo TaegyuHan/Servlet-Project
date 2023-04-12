@@ -2,14 +2,11 @@ package webapp.dto;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import webapp.entity.Title;
 import webapp.util.ReadFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -84,35 +81,6 @@ public class TitleDto {
         } catch (JSONException e) {
             return Optional.empty();
         }
-    }
-
-    public Title toEntity() {
-        return new Title.Builder()
-                .empNo(this.getEmpNo())
-                .title(this.getTitle())
-                .fromDate(this.getFromDate())
-                .toDate(this.getToDate())
-                .build();
-    }
-
-    public static List<TitleDto> entitiesToDtos(List<Title> entities) {
-
-        List<TitleDto> dtos = new ArrayList<>();
-
-        for (Title entity : entities) {
-            dtos.add(TitleDto.entityToDto(entity));
-        }
-
-        return dtos;
-    }
-
-    public static TitleDto entityToDto(Title entity) {
-        return new TitleDto.Builder()
-                .empNo(entity.getEmpNo())
-                .title(entity.getTitle())
-                .fromDate(entity.getFromDate())
-                .toDate(entity.getToDate())
-                .build();
     }
 
     public static class Builder {

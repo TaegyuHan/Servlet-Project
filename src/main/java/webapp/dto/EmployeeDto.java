@@ -2,15 +2,12 @@ package webapp.dto;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import webapp.entity.Employee;
 import webapp.entity.Gender;
 import webapp.util.ReadFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -105,45 +102,6 @@ public class EmployeeDto {
         } catch (JSONException e) {
             return Optional.empty();
         }
-    }
-
-    public Employee toEntity() {
-        return new Employee.Builder()
-                .empNo(this.empNo)
-                .birthDate(this.birthDate)
-                .firstName(this.firstName)
-                .lastName(this.lastName)
-                .gender(this.gender)
-                .hireDate(this.hireDate)
-                .build();
-    }
-
-    public static List<EmployeeDto> entitiesToDtos(List<Employee> entities) {
-
-        List<EmployeeDto> dtos = new ArrayList<>();
-
-        for (Employee entity : entities) {
-            dtos.add(EmployeeDto.entityToDto(entity));
-        }
-
-        return dtos;
-    }
-
-    public static EmployeeDto entityToDto(Employee entity) {
-        return new EmployeeDto.Builder()
-                .empNo(entity.getEmpNo())
-                .birthDate(entity.getBirthDate())
-                .firstName(entity.getFirstName())
-                .lastName(entity.getLastName())
-                .gender(entity.getGender())
-                .hireDate(entity.getHireDate())
-                .build();
-    }
-
-    public static Optional<EmployeeDto> entityToDto(Optional<Employee> optEntity) {
-        return Optional.ofNullable(
-                entityToDto(optEntity.get())
-        );
     }
 
     public static class Builder {

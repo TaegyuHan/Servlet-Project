@@ -2,14 +2,11 @@ package webapp.dto;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import webapp.entity.DeptEmp;
 import webapp.util.ReadFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -73,7 +70,7 @@ public class DeptEmpDto {
 
         try {
             return Optional.of(
-                    new DeptEmpDto.Builder()
+                    new Builder()
                             .empNo(json.getInt("emp_no"))
                             .deptNo(json.getString("dept_no"))
                             .fromDate(Date.valueOf(json.getString("from_date")))
@@ -86,42 +83,6 @@ public class DeptEmpDto {
         }
     }
 
-    public DeptEmp toEntity() {
-        return new DeptEmp.Builder()
-                .empNo(this.empNo)
-                .deptNo(this.deptNo)
-                .fromDate(this.fromDate)
-                .toDate(this.toDate)
-                .build();
-    }
-
-    public static List<DeptEmpDto> entitiesToDtos(List<DeptEmp> entities) {
-
-        List<DeptEmpDto> dtos = new ArrayList<>();
-
-        for (DeptEmp entity : entities) {
-            dtos.add(DeptEmpDto.entityToDto(entity));
-        }
-
-        return dtos;
-    }
-
-    public static DeptEmpDto entityToDto(DeptEmp entity) {
-        return new DeptEmpDto.Builder()
-                .empNo(entity.getEmpNo())
-                .empNo(entity.getEmpNo())
-                .deptNo(entity.getDeptNo())
-                .fromDate(entity.getFromDate())
-                .toDate(entity.getToDate())
-                .build();
-    }
-
-    public static Optional<DeptEmpDto> entityToDto(Optional<DeptEmp> optEntity) {
-        return Optional.ofNullable(
-                entityToDto(optEntity.get())
-        );
-    }
-    
     public static class Builder {
 
         private DeptEmpDto entity = new DeptEmpDto();

@@ -2,13 +2,10 @@ package webapp.dto;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import webapp.entity.Department;
 import webapp.util.ReadFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class DepartmentDto {
@@ -60,37 +57,6 @@ public class DepartmentDto {
         } catch (JSONException e) {
             return Optional.empty();
         }
-    }
-
-    public Department toEntity() {
-        return new Department.Builder()
-                .deptNo(this.deptNo)
-                .deptName(this.deptName)
-                .build();
-    }
-
-    public static List<DepartmentDto> entitiesToDtos(List<Department> entities) {
-
-        List<DepartmentDto> dtos = new ArrayList<>();
-
-        for (Department entity : entities) {
-            dtos.add(DepartmentDto.entityToDto(entity));
-        }
-
-        return dtos;
-    }
-
-    public static DepartmentDto entityToDto(Department entity) {
-        return new DepartmentDto.Builder()
-                .deptNo(entity.getDeptNo())
-                .deptName(entity.getDeptName())
-                .build();
-    }
-
-    public static Optional<DepartmentDto> entityToDto(Optional<Department> optEntity) {
-        return Optional.ofNullable(
-                entityToDto(optEntity.get())
-        );
     }
 
     public static class Builder {

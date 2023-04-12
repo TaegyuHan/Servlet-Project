@@ -2,14 +2,11 @@ package webapp.dto;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import webapp.entity.DeptManager;
 import webapp.util.ReadFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -85,42 +82,6 @@ public class DeptManagerDto {
         }
     }
 
-    public DeptManager toEntity() {
-        return new DeptManager.Builder()
-                .empNo(this.empNo)
-                .deptNo(this.deptNo)
-                .fromDate(this.fromDate)
-                .toDate(this.toDate)
-                .build();
-    }
-
-    public static List<DeptManagerDto> entitiesToDtos(List<DeptManager> entities) {
-
-        List<DeptManagerDto> dtos = new ArrayList<>();
-
-        for (DeptManager entity : entities) {
-            dtos.add(DeptManagerDto.entityToDto(entity));
-        }
-
-        return dtos;
-    }
-
-    public static DeptManagerDto entityToDto(DeptManager entity) {
-        return new DeptManagerDto.Builder()
-                .empNo(entity.getEmpNo())
-                .empNo(entity.getEmpNo())
-                .deptNo(entity.getDeptNo())
-                .fromDate(entity.getFromDate())
-                .toDate(entity.getToDate())
-                .build();
-    }
-
-    public static Optional<DeptManagerDto> entityToDto(Optional<DeptManager> optEntity) {
-        return Optional.ofNullable(
-                entityToDto(optEntity.get())
-        );
-    }
-    
     public static class Builder {
 
         private DeptManagerDto entity = new DeptManagerDto();
