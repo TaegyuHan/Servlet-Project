@@ -3,4 +3,69 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
+    <!-- ===================================== Filter Start =====================================  -->
+
+    <!-- /v1/employees -->
+    <filter>
+        <filter-name>EmployeeFilter</filter-name>
+        <filter-class>webapp.filter.EmployeeFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EmployeeFilter</filter-name>
+        <url-pattern>/v1/employees</url-pattern>
+    </filter-mapping>
+
+    <!-- /v1/department -->
+    <filter>
+        <filter-name>DepartmentFilter</filter-name>
+        <filter-class>webapp.filter.DepartmentFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>DepartmentFilter</filter-name>
+        <url-pattern>/v1/department</url-pattern>
+    </filter-mapping>
+
+    <!-- /v1/dept-emp -->
+    <filter>
+        <filter-name>DepEmpFilter</filter-name>
+        <filter-class>webapp.filter.DepEmpFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>DepEmpFilter</filter-name>
+        <url-pattern>/v1/dept-emp</url-pattern>
+    </filter-mapping>
+
+    <!-- /v1/dept-manager -->
+    <filter>
+        <filter-name>DeptManagerFilter</filter-name>
+        <filter-class>webapp.filter.DeptManagerFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>DeptManagerFilter</filter-name>
+        <url-pattern>/v1/dept-manager</url-pattern>
+    </filter-mapping>
+
+    <!-- /v1/salary -->
+    <filter>
+        <filter-name>SalaryFilter</filter-name>
+        <filter-class>webapp.filter.SalaryFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SalaryFilter</filter-name>
+        <url-pattern>/v1/salary</url-pattern>
+    </filter-mapping>
+
+    <!-- /v1/title -->
+    <filter>
+        <filter-name>TitleFilter</filter-name>
+        <filter-class>webapp.filter.TitleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>TitleFilter</filter-name>
+        <url-pattern>/v1/title</url-pattern>
+    </filter-mapping>
+
+    <!-- ===================================== Filter End =====================================  -->
+
 </web-app>
