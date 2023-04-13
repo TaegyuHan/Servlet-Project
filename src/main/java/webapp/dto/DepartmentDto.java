@@ -19,8 +19,8 @@ public class DepartmentDto {
             throw new IllegalArgumentException("\"dept_no\" key not found in JSON object or is empty");
         }
 
-        if (deptNo.length() == 4) {
-            throw new IllegalArgumentException("\"dept_no\" please set the data length to 4");
+        if (deptNo.length() != 4) {
+            throw new IllegalArgumentException("\"dept_no\" value length is invalid. Please set the data length to 4");
         }
 
         this.deptNo = deptNo;
@@ -36,7 +36,7 @@ public class DepartmentDto {
             throw new IllegalArgumentException("\"dept_name\" key not found in JSON object or is empty");
         }
 
-        if (deptName.length() == 40) {
+        if (40 < deptName.length()) {
             throw new IllegalArgumentException("\"dept_no\" please set the data length to deptName");
         }
 

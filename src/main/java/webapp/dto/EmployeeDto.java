@@ -70,7 +70,11 @@ public class EmployeeDto {
     public void setFirstName(String firstName) {
 
         if (firstName == null || firstName.isEmpty()) {
-            throw new IllegalArgumentException("\"first_name\" key not found in JSON object or is empty");
+            throw new IllegalArgumentException("\"first_name\" value not found in JSON object or is empty");
+        }
+
+        if (14 < firstName.length()) {
+            throw new IllegalArgumentException("\"first_name\" value length is invalid. Please set the data length to 14 or less");
         }
 
         this.firstName = firstName;
@@ -84,6 +88,10 @@ public class EmployeeDto {
 
         if (lastName == null || lastName.isEmpty()) {
             throw new IllegalArgumentException("\"last_name\" key not found in JSON object or is empty");
+        }
+
+        if (16 < lastName.length()) {
+            throw new IllegalArgumentException("\"last_name\" value length is invalid. Please set the data length to 16 or less");
         }
 
 

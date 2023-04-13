@@ -30,6 +30,11 @@ public class SalaryDto {
     }
 
     public void setEmpNo(int empNo) {
+
+        if (empNo == 0) {
+            throw new IllegalArgumentException("\"emp_no\" key not found in JSON object or is empty");
+        }
+
         this.empNo = empNo;
     }
 

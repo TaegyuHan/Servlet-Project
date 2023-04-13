@@ -44,6 +44,11 @@ public class TitleDto {
             throw new IllegalArgumentException("\"title\" key not found in JSON object or is empty");
         }
 
+        if (50 < title.length()) {
+            throw new IllegalArgumentException("\"title\" value length exceeds the limit of 50 characters");
+        }
+
+
         this.title = title;
     }
 

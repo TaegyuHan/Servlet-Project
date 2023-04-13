@@ -48,7 +48,7 @@ public class DeptEmpDto {
             throw new IllegalArgumentException("\"dept_no\" key not found in JSON object or is empty");
         }
 
-        if (deptNo.length() == 4) {
+        if (deptNo.length() != 4) {
             throw new IllegalArgumentException("\"dept_no\" please set the data length to 4");
         }
 
