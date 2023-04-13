@@ -13,7 +13,7 @@ import java.util.Optional;
 public class DeptEmpDaoImpl implements DeptEmpDao {
 
     @Override
-    public int create(DeptEmp entity) {
+    public Optional<DeptEmp> create(DeptEmp entity) {
 
         String sql = "INSERT INTO dept_emp (emp_no, dept_no, from_date, to_date) VALUES (?, ?, ?, ?)";
 
@@ -25,7 +25,13 @@ public class DeptEmpDaoImpl implements DeptEmpDao {
             pstmt.setDate(3, entity.getFromDate());
             pstmt.setDate(4, entity.getToDate());
 
-            return pstmt.executeUpdate();
+            int changeRow = pstmt.executeUpdate();
+
+            if (changeRow == 0) {
+                return Optional.empty(); // 업데이트 실패
+            }
+
+            return Optional.of(entity);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -156,7 +162,7 @@ public class DeptEmpDaoImpl implements DeptEmpDao {
     }
 
     @Override
-    public int update(DeptEmp entity) {
+    public Optional<DeptEmp> update(DeptEmp entity) {
 
         String sql = "UPDATE dept_emp SET dept_no = ?, from_date = ?, to_date = ? "
                 + "WHERE emp_no = ?";
@@ -169,7 +175,13 @@ public class DeptEmpDaoImpl implements DeptEmpDao {
             pstmt.setDate(3, entity.getToDate());
             pstmt.setInt(4, entity.getEmpNo());
 
-            return pstmt.executeUpdate();
+            int changeRow = pstmt.executeUpdate();
+
+            if (changeRow == 0) {
+                return Optional.empty(); // 업데이트 실패
+            }
+
+            return Optional.of(entity);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

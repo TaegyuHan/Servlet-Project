@@ -14,9 +14,15 @@ public class DeptEmpService {
 
     private final DeptEmpDao dao = new DeptEmpDaoImpl();
 
-    public int create(DeptEmpDto dto) {
-        return dao.create(dtoToEntity(dto));
+    /*  =====================  Create Start  =====================  */
+
+    public Optional<DeptEmpDto> create(DeptEmpDto dto) {
+        return entityToDto(dao.create(dtoToEntity(dto)));
     }
+
+    /*  =====================  Create End  =====================  */
+
+    /*  =====================  Read Start  =====================  */
 
     public List<DeptEmpDto> searchAll() {
         return entitiesToDtos(dao.findAll());
@@ -34,13 +40,23 @@ public class DeptEmpService {
         return entitiesToDtos(dao.findByDeptNo(deptNo));
     }
 
-    public int update(DeptEmpDto dto) {
-        return dao.update(dtoToEntity(dto));
+    /*  =====================  Read End  =====================  */
+
+    /*  =====================  Update Start  =====================  */
+
+    public Optional<DeptEmpDto> update(DeptEmpDto dto) {
+        return entityToDto(dao.update(dtoToEntity(dto)));
     }
+
+    /*  =====================  Update End  =====================  */
+
+    /*  =====================  Delete Start  =====================  */
 
     public int delete(DeptEmpDto dto) {
         return dao.delete(dtoToEntity(dto));
     }
+
+    /*  =====================  Delete End  =====================  */
 
     private DeptEmp dtoToEntity(DeptEmpDto dto) {
         return new DeptEmp.Builder()

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface DeptEmpDao {
 
-    int create(DeptEmp deptEmp);
+    Optional<DeptEmp> create(DeptEmp deptEmp);
 
     List<DeptEmp> findAll();
 
@@ -17,7 +17,7 @@ public interface DeptEmpDao {
 
     Optional<DeptEmp> findByEmpNoAndDeptNo(int empNo, String deptNo);
 
-    int update(DeptEmp deptEmp);
+    Optional<DeptEmp> update(DeptEmp deptEmp);
 
     int delete(DeptEmp deptEmp);
 }
