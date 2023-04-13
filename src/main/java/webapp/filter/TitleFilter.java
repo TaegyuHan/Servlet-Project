@@ -1,16 +1,14 @@
 package webapp.filter;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import webapp.dto.DeptEmpDto;
-import webapp.entity.Title;
+import webapp.dto.TitleDto;
 import webapp.util.HttpMethod;
 import webapp.util.InputStream;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.sql.Date;
 
 
 public class TitleFilter implements Filter {
@@ -44,43 +42,19 @@ public class TitleFilter implements Filter {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
+    @Override
+    public void destroy() {
+        Filter.super.destroy();
+    }
+
     private void deleteJsonDataCheck(ServletRequest request) throws IOException {
 
-        String jsonData = InputStream.getJsonToString(request);
-        JSONObject json = new JSONObject(jsonData);
+        JSONObject json = InputStream.getJsonObject(request);
 
-        /*
-         * 컬럼 이름 : emp_no
-         * */
-        int empNo = json.optInt("emp_no");
-
-        /*
-         * 컬럼 이름 : title
-         * */
-        String title = json.optString("title");
-        if (title == null || title.isEmpty()) {
-            throw new JSONException("\"title\" key not found in JSON object or is empty");
-        }
-
-        /*
-         * 컬럼 이름 : from_date
-         * */
-        String fromDateStr = json.optString("from_date");
-        if (fromDateStr == null || fromDateStr.isEmpty()) {
-            throw new JSONException("\"from_date\" key not found in JSON object or is empty");
-        }
-
-        Date fromDate;
-        try {
-            fromDate = Date.valueOf(fromDateStr);
-        } catch (IllegalArgumentException e) {
-            throw new JSONException("\"from_date\" value cannot be converted to Date");
-        }
-
-        Title dto = new Title.Builder()
-                .empNo(empNo)
-                .title(title)
-                .fromDate(fromDate)
+        TitleDto dto = new TitleDto.Builder()
+                .empNo(json.optInt("emp_no"))
+                .title(json.optString("title"))
+                .fromDate(json.optString("from_date"))
                 .build();
 
         request.setAttribute("dto", dto);
@@ -94,31 +68,10 @@ public class TitleFilter implements Filter {
 
         deleteJsonDataCheck(request);
 
-        String jsonData = InputStream.getJsonToString(request);
-        JSONObject json = new JSONObject(jsonData);
-
-        /*
-         * 컬럼 이름 : to_date
-         * */
-        String toDateStr = json.optString("to_date");
-        if (toDateStr == null || toDateStr.isEmpty()) {
-            throw new JSONException("\"to_date\" key not found in JSON object or is empty");
-        }
-
-        Date toDate;
-        try {
-            toDate = Date.valueOf(toDateStr);
-        } catch (IllegalArgumentException e) {
-            throw new JSONException("\"to_date\" value cannot be converted to Date");
-        }
+        JSONObject json = InputStream.getJsonObject(request);
 
         DeptEmpDto dto = (DeptEmpDto) request.getAttribute("dto");
-        dto.setToDate(toDate);
+        dto.setToDate(json.optString("to_date"));
         request.setAttribute("dto", dto);
-    }
-
-    @Override
-    public void destroy() {
-        Filter.super.destroy();
     }
 }

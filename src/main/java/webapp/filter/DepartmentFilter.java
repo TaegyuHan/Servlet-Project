@@ -1,6 +1,5 @@
 package webapp.filter;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import webapp.dto.DepartmentDto;
 import webapp.util.HttpMethod;
@@ -57,22 +56,11 @@ public class DepartmentFilter implements Filter {
 
     private void createJsonDataCheck(ServletRequest request) throws IOException {
 
-        String jsonData = InputStream.getJsonToString(request);
-        JSONObject json = new JSONObject(jsonData);
-
-        String deptNo = json.optString("dept_no");
-        if (deptNo == null || deptNo.isEmpty()) {
-            throw new JSONException("\"dept_no\" key not found in JSON object or is empty");
-        }
-
-        String deptName = json.optString("dept_name");
-        if (deptName == null || deptName.isEmpty()) {
-            throw new JSONException("\"dept_name\" key not found in JSON object or is empty");
-        }
+        JSONObject json = InputStream.getJsonObject(request);
 
         DepartmentDto dto = new DepartmentDto.Builder()
-                .deptNo(deptNo)
-                .deptName(deptName)
+                .deptNo(json.optString("dept_no"))
+                .deptName(json.optString("dept_name"))
                 .build();
 
         request.setAttribute("dto", dto);

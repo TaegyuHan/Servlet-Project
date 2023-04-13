@@ -1,13 +1,6 @@
 package webapp.dto;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import webapp.util.ReadFile;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.sql.Date;
-import java.util.Optional;
 
 
 public class DeptManagerDto {
@@ -23,7 +16,24 @@ public class DeptManagerDto {
         return empNo;
     }
 
+    public void setEmpNo(String empNoStr) {
+        if (empNoStr == null || empNoStr.isEmpty()) {
+            throw new IllegalArgumentException("\"emp_no\" key not found in JSON object or is empty");
+        }
+
+        try {
+            this.empNo = Integer.parseInt(empNoStr);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("\"emp_no\" value is not valid");
+        }
+    }
+
     public void setEmpNo(int empNo) {
+
+        if (empNo == 0) {
+            throw new IllegalArgumentException("\"emp_no\" key not found in JSON object or is empty");
+        }
+
         this.empNo = empNo;
     }
 
@@ -32,11 +42,33 @@ public class DeptManagerDto {
     }
 
     public void setDeptNo(String deptNo) {
+
+        if (deptNo == null || deptNo.isEmpty()) {
+            throw new IllegalArgumentException("\"dept_no\" key not found in JSON object or is empty");
+        }
+
+        if (deptNo.length() == 4) {
+            throw new IllegalArgumentException("\"dept_no\" please set the data length to 4");
+        }
+
         this.deptNo = deptNo;
     }
 
     public Date getFromDate() {
         return fromDate;
+    }
+
+    public void setFromDate(String fromDateStr) {
+
+        if (fromDateStr == null || fromDateStr.isEmpty()) {
+            throw new IllegalArgumentException("\"from_date\" key not found in JSON object or is empty");
+        }
+
+        try {
+            this.fromDate = Date.valueOf(fromDateStr);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("\"from_date\" value cannot be converted to Date");
+        }
     }
 
     public void setFromDate(Date fromDate) {
@@ -45,6 +77,19 @@ public class DeptManagerDto {
 
     public Date getToDate() {
         return toDate;
+    }
+
+    public void setToDate(String toDateStr) {
+
+        if (toDateStr == null || toDateStr.isEmpty()) {
+            throw new IllegalArgumentException("\"to_date\" key not found in JSON object or is empty");
+        }
+
+        try {
+            this.toDate = Date.valueOf(toDateStr);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("\"to_date\" value cannot be converted to Date");
+        }
     }
 
     public void setToDate(Date toDate) {
@@ -60,28 +105,7 @@ public class DeptManagerDto {
                 ", toDate=" + toDate +
                 '}';
     }
-
-    public static Optional<DeptManagerDto> reqeustToDto(HttpServletRequest request) throws IOException {
-
-        String jsonData = ReadFile.read(request);
-
-        JSONObject json = new JSONObject(jsonData);
-
-        try {
-            return Optional.of(
-                    new DeptManagerDto.Builder()
-                            .empNo(json.getInt("emp_no"))
-                            .deptNo(json.getString("dept_no"))
-                            .fromDate(Date.valueOf(json.getString("from_date")))
-                            .toDate(Date.valueOf(json.getString("to_date")))
-                            .build()
-            );
-
-        } catch (JSONException e) {
-            return Optional.empty();
-        }
-    }
-
+    
     public static class Builder {
 
         private DeptManagerDto entity = new DeptManagerDto();

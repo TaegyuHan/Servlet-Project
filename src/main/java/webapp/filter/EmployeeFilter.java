@@ -1,16 +1,13 @@
 package webapp.filter;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import webapp.dto.EmployeeDto;
-import webapp.entity.Gender;
 import webapp.util.HttpMethod;
 import webapp.util.InputStream;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.sql.Date;
 
 
 public class EmployeeFilter implements Filter {
@@ -50,105 +47,40 @@ public class EmployeeFilter implements Filter {
     }
 
     private void deleteJsonDataCheck(ServletRequest request) throws IOException {
-        updateJsonDataCheck(request);
+
+        JSONObject json = InputStream.getJsonObject(request);
+
+        EmployeeDto dto = new EmployeeDto.Builder()
+                .empNo(json.optString("emp_no"))
+                .build();
+
+        request.setAttribute("dto", dto);
     }
 
     private void updateJsonDataCheck(ServletRequest request) throws IOException {
 
-        String jsonData = InputStream.getJsonToString(request);
-        JSONObject json = new JSONObject(jsonData);
-
-        /*
-         * Column Name : emp_no
-         * */
-        String empNoStr = json.optString("emp_no");
-        if (empNoStr == null || empNoStr.isEmpty()) {
-            throw new JSONException("\"emp_no\" key not found in JSON object or is empty");
-        }
-
-        int empNo;
-        try {
-            empNo = Integer.parseInt(empNoStr);
-        } catch (NumberFormatException e) {
-            throw new JSONException("\"emp_no\" value is not valid");
-        }
-
         createJsonDataCheck(request);
+
+        JSONObject json = InputStream.getJsonObject(request);
 
         EmployeeDto dto = (EmployeeDto) request.getAttribute("dto");
 
-        dto.setEmpNo(empNo);
+        dto.setEmpNo(json.optString("emp_no"));
         request.setAttribute("dto", dto);
     }
 
     private void createJsonDataCheck(ServletRequest request) throws IOException {
 
-        String jsonData = InputStream.getJsonToString(request);
-        JSONObject json = new JSONObject(jsonData);
-
-        /*
-         * Column Name : birth_date
-         * */
-        String birthDateStr = json.optString("birth_date");
-        if (birthDateStr == null || birthDateStr.isEmpty()) {
-            throw new JSONException("\"birth_date\" key not found in JSON object or is empty");
-        }
-
-        Date birthDate;
-        try {
-            birthDate = Date.valueOf(birthDateStr);
-        } catch (IllegalArgumentException e) {
-            throw new JSONException("\"birth_date\" value cannot be converted to Date");
-        }
-
-        /*
-         * 컬럼 이름 : first_name
-         * */
-        String firstName = json.optString("first_name");
-        if (firstName == null || firstName.isEmpty()) {
-            throw new JSONException("\"first_name\" key not found in JSON object or is empty");
-        }
-
-        /*
-         * 컬럼 이름 : last_name
-         * */
-        String lastName = json.optString("last_name");
-        if (lastName == null || lastName.isEmpty()) {
-            throw new JSONException("\"last_name\" key not found in JSON object or is empty");
-        }
-
-        /*
-         * 컬럼 이름 : last_name
-         * */
-        String genderStr = json.optString("gender");
-        if (genderStr == null || genderStr.isEmpty()) {
-            throw new JSONException("\"gender\" key not found in JSON object or is empty");
-        }
-
-        Gender gender;
-        try {
-            gender = Gender.valueOf(genderStr);
-        } catch (IllegalArgumentException e) {
-            throw new JSONException("\"gender\" value is not valid. Please enter M or F.");
-        }
-
-        /*
-         * Column Name : hire_date
-         * */
-        String hireDateStr = json.optString("hire_date");
-        Date hireDate = null;
-        if (hireDateStr != null && !hireDateStr.isEmpty()) {
-            hireDate = Date.valueOf(hireDateStr);
-        }
+        JSONObject json = InputStream.getJsonObject(request);
 
         int CREATE_NUMBER = -1;
         EmployeeDto dto = new EmployeeDto.Builder()
                 .empNo(CREATE_NUMBER)
-                .birthDate(birthDate)
-                .firstName(firstName)
-                .lastName(lastName)
-                .gender(gender)
-                .hireDate(hireDate)
+                .birthDate(json.optString("birth_date"))
+                .firstName(json.optString("first_name"))
+                .lastName(json.optString("last_name"))
+                .gender(json.optString("gender"))
+                .hireDate(json.optString("hire_date"))
                 .build();
 
         request.setAttribute("dto", dto);

@@ -19,17 +19,11 @@ public class DepEmpServlet extends HttpServlet {
     private final DeptEmpService service = new DeptEmpService();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
-        Optional<DeptEmpDto> optDto = DeptEmpDto.reqeustToDto(request);
+        DeptEmpDto dto = (DeptEmpDto) request.getAttribute("dto");
 
-        if (optDto.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
-
-        int updateCount = service.create(optDto.get());
+        int updateCount = service.create(dto);
 
         if (updateCount != 1) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -37,12 +31,10 @@ public class DepEmpServlet extends HttpServlet {
         }
 
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().println("Data received successfully.");
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 
         Optional<String> optEmpNo = Optional.ofNullable(request.getParameter("emp_no"));
         Optional<String> optDeptNo = Optional.ofNullable(request.getParameter("dept_no"));
@@ -73,33 +65,21 @@ public class DepEmpServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) {
 
-        Optional<DeptEmpDto> optDto = DeptEmpDto.reqeustToDto(request);
+        DeptEmpDto dto = (DeptEmpDto) request.getAttribute("dto");
 
-        if (optDto.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
-
-        int updateCount = service.update(optDto.get());
+        int updateCount = service.update(dto);
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
 
-        Optional<DeptEmpDto> optDto = DeptEmpDto.reqeustToDto(request);
+        DeptEmpDto dto = (DeptEmpDto) request.getAttribute("dto");
 
-        if (optDto.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
-
-        int updateCount = service.delete(optDto.get());
+        int updateCount = service.delete(dto);
 
         response.setStatus(HttpServletResponse.SC_OK);
     }

@@ -1,16 +1,18 @@
 package webapp.util;
 
-import javax.servlet.http.HttpServletRequest;
+import org.json.JSONObject;
+
+import javax.servlet.ServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class ReadFile {
+public class InputStream {
 
-    public static String read(HttpServletRequest request) throws IOException {
+    public static JSONObject getJsonObject(ServletRequest servletRequest) throws IOException {
 
         StringBuilder sb = new StringBuilder();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(servletRequest.getInputStream()));
         String line = reader.readLine();
 
         while (line != null) {
@@ -19,6 +21,6 @@ public class ReadFile {
         }
         reader.close();
 
-        return sb.toString();
+        return new JSONObject(sb.toString());
     }
 }

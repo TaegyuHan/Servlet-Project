@@ -1,15 +1,13 @@
 package webapp.filter;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-import webapp.entity.Salary;
+import webapp.dto.SalaryDto;
 import webapp.util.HttpMethod;
 import webapp.util.InputStream;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.sql.Date;
 
 
 public class SalaryFilter implements Filter {
@@ -45,42 +43,11 @@ public class SalaryFilter implements Filter {
 
     private void deleteJsonDataCheck(ServletRequest request) throws IOException {
 
-        String jsonData = InputStream.getJsonToString(request);
-        JSONObject json = new JSONObject(jsonData);
+        JSONObject json = InputStream.getJsonObject(request);
 
-        /*
-         * Column Name : emp_no
-         * */
-        String empNoStr = json.optString("emp_no");
-        if (empNoStr == null || empNoStr.isEmpty()) {
-            throw new JSONException("\"emp_no\" key not found in JSON object or is empty");
-        }
-
-        int empNo;
-        try {
-            empNo = Integer.parseInt(empNoStr);
-        } catch (NumberFormatException e) {
-            throw new JSONException("\"emp_no\" value is not valid");
-        }
-
-        /*
-         * 컬럼 이름 : from_date
-         */
-        String fromDateStr = json.optString("from_date");
-        if (fromDateStr == null || fromDateStr.isEmpty()) {
-            throw new JSONException("\"from_date\" key not found in JSON object or is empty");
-        }
-
-        Date fromDate;
-        try {
-            fromDate = Date.valueOf(fromDateStr);
-        } catch (IllegalArgumentException e) {
-            throw new JSONException("\"from_date\" value cannot be converted to Date");
-        }
-
-        Salary dto = new Salary.Builder()
-                .empNo(empNo)
-                .fromDate(fromDate)
+        SalaryDto dto = new SalaryDto.Builder()
+                .empNo(json.optString("emp_no"))
+                .fromDate(json.optString("from_date"))
                 .build();
 
         request.setAttribute("dto", dto);
@@ -92,32 +59,13 @@ public class SalaryFilter implements Filter {
 
     private void createJsonDataCheck(ServletRequest request) throws IOException {
 
-        String jsonData = InputStream.getJsonToString(request);
-        JSONObject json = new JSONObject(jsonData);
+        deleteJsonDataCheck(request);
 
-        /*
-         * 컬럼 이름 : salary
-         * */
-        int salary = json.optInt("salary");
+        JSONObject json = InputStream.getJsonObject(request);
 
-        /*
-         * 컬럼 이름 : from_date
-         */
-        String toDateStr = json.optString("to_date");
-        if (toDateStr == null || toDateStr.isEmpty()) {
-            throw new JSONException("\"to_date\" key not found in JSON object or is empty");
-        }
-
-        Date toDate;
-        try {
-            toDate = Date.valueOf(toDateStr);
-        } catch (IllegalArgumentException e) {
-            throw new JSONException("\"to_date\" value cannot be converted to Date");
-        }
-
-        Salary dto = (Salary) request.getAttribute("dto");
-        dto.setSalary(salary);
-        dto.setToDate(toDate);
+        SalaryDto dto = (SalaryDto) request.getAttribute("dto");
+        dto.setSalary(json.optInt("salary"));
+        dto.setToDate(json.optString("to_date"));
         request.setAttribute("dto", dto);
     }
 

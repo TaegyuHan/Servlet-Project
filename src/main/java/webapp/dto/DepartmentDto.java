@@ -1,12 +1,5 @@
 package webapp.dto;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import webapp.util.ReadFile;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.Optional;
 
 public class DepartmentDto {
 
@@ -21,6 +14,15 @@ public class DepartmentDto {
     }
 
     public void setDeptNo(String deptNo) {
+
+        if (deptNo == null || deptNo.isEmpty()) {
+            throw new IllegalArgumentException("\"dept_no\" key not found in JSON object or is empty");
+        }
+
+        if (deptNo.length() == 4) {
+            throw new IllegalArgumentException("\"dept_no\" please set the data length to 4");
+        }
+
         this.deptNo = deptNo;
     }
 
@@ -29,6 +31,15 @@ public class DepartmentDto {
     }
 
     public void setDeptName(String deptName) {
+
+        if (deptName == null || deptName.isEmpty()) {
+            throw new IllegalArgumentException("\"dept_name\" key not found in JSON object or is empty");
+        }
+
+        if (deptName.length() == 40) {
+            throw new IllegalArgumentException("\"dept_no\" please set the data length to deptName");
+        }
+
         this.deptName = deptName;
     }
 
@@ -38,25 +49,6 @@ public class DepartmentDto {
                 "deptNo='" + deptNo + '\'' +
                 ", deptName='" + deptName + '\'' +
                 '}';
-    }
-
-    public static Optional<DepartmentDto> reqeustToDto(HttpServletRequest request) throws IOException {
-
-        String jsonData = ReadFile.read(request);
-
-        JSONObject json = new JSONObject(jsonData);
-
-        try {
-            return Optional.of(
-                    new Builder()
-                            .deptNo(json.getString("dept_no"))
-                            .deptName(json.getString("dept_name"))
-                            .build()
-            );
-
-        } catch (JSONException e) {
-            return Optional.empty();
-        }
     }
 
     public static class Builder {

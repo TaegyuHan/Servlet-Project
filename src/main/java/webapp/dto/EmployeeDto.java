@@ -1,14 +1,8 @@
 package webapp.dto;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import webapp.entity.Gender;
-import webapp.util.ReadFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.sql.Date;
-import java.util.Optional;
 
 
 public class EmployeeDto {
@@ -20,18 +14,49 @@ public class EmployeeDto {
     private Gender gender;
     private Date hireDate;
 
-    public EmployeeDto() {};
+    public EmployeeDto() {}
 
     public int getEmpNo() {
         return empNo;
     }
 
+    public void setEmpNo(String empNoStr) {
+
+        if (empNoStr == null || empNoStr.isEmpty()) {
+            throw new IllegalArgumentException("\"emp_no\" key not found in JSON object or is empty");
+        }
+
+        try {
+            this.empNo = Integer.parseInt(empNoStr);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("\"emp_no\" value is not valid");
+        }
+    }
+
     public void setEmpNo(int empNo) {
+
+        if (empNo == 0) {
+            throw new IllegalArgumentException("\"emp_no\" key not found in JSON object or is empty");
+        }
+
         this.empNo = empNo;
     }
 
     public Date getBirthDate() {
         return birthDate;
+    }
+
+    public void setBirthDate(String birthDateStr) {
+
+        if (birthDateStr == null || birthDateStr.isEmpty()) {
+            throw new IllegalArgumentException("\"birth_date\" key not found in JSON object or is empty");
+        }
+
+        try {
+            this.birthDate = Date.valueOf(birthDateStr);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("\"birth_date\" value cannot be converted to Date");
+        }
     }
 
     public void setBirthDate(Date birthDate) {
@@ -43,6 +68,11 @@ public class EmployeeDto {
     }
 
     public void setFirstName(String firstName) {
+
+        if (firstName == null || firstName.isEmpty()) {
+            throw new IllegalArgumentException("\"first_name\" key not found in JSON object or is empty");
+        }
+
         this.firstName = firstName;
     }
 
@@ -51,11 +81,30 @@ public class EmployeeDto {
     }
 
     public void setLastName(String lastName) {
+
+        if (lastName == null || lastName.isEmpty()) {
+            throw new IllegalArgumentException("\"last_name\" key not found in JSON object or is empty");
+        }
+
+
         this.lastName = lastName;
     }
 
     public Gender getGender() {
         return gender;
+    }
+
+    public void setGender(String genderStr) {
+
+        if (genderStr == null || genderStr.isEmpty()) {
+            throw new IllegalArgumentException("\"gender\" key not found in JSON object or is empty");
+        }
+
+        try {
+            this.gender = Gender.valueOf(genderStr);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("\"gender\" value is not valid. Please enter M or F.");
+        }
     }
 
     public void setGender(Gender gender) {
@@ -64,6 +113,19 @@ public class EmployeeDto {
 
     public Date getHireDate() {
         return hireDate;
+    }
+
+    public void setHireDate(String hireDateStr) {
+
+        if (hireDateStr == null || hireDateStr.isEmpty()) {
+            throw new IllegalArgumentException("\"hire_date\" key not found in JSON object or is empty");
+        }
+
+        try {
+            this.hireDate = Date.valueOf(hireDateStr);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("\"hire_date\" value cannot be converted to Date");
+        }
     }
 
     public void setHireDate(Date hireDate) {
@@ -82,34 +144,22 @@ public class EmployeeDto {
                 '}';
     }
 
-    public static Optional<EmployeeDto> reqeustToDto(HttpServletRequest request) throws IOException {
-
-        String jsonData = ReadFile.read(request);
-
-        JSONObject json = new JSONObject(jsonData);
-
-        try {
-            return Optional.of(
-                    new Builder()
-                            .birthDate(Date.valueOf(json.getString("birth_date")))
-                            .firstName(json.getString("first_name"))
-                            .lastName(json.getString("last_name"))
-                            .gender(Gender.valueOf(json.getString("gender")))
-                            .hireDate(Date.valueOf(json.getString("hire_date")))
-                            .build()
-            );
-
-        } catch (JSONException e) {
-            return Optional.empty();
-        }
-    }
-
     public static class Builder {
 
         private EmployeeDto entity = new EmployeeDto();
 
+        public Builder empNo(String empNo) {
+            entity.setEmpNo(empNo);
+            return this;
+        }
+
         public Builder empNo(int empNo) {
             entity.setEmpNo(empNo);
+            return this;
+        }
+
+        public Builder birthDate(String birthDate) {
+            entity.setBirthDate(birthDate);
             return this;
         }
 
@@ -128,8 +178,18 @@ public class EmployeeDto {
             return this;
         }
 
+        public Builder gender(String gender) {
+            entity.setGender(gender);
+            return this;
+        }
+
         public Builder gender(Gender gender) {
             entity.setGender(gender);
+            return this;
+        }
+
+        public Builder hireDate(String hireDate) {
+            entity.setHireDate(hireDate);
             return this;
         }
 

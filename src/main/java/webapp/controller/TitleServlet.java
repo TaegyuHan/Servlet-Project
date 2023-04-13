@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 
 @WebServlet("/v1/title")
@@ -20,17 +19,11 @@ public class TitleServlet extends HttpServlet {
     private final TitleService service = new TitleService();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
-        Optional<TitleDto> optDto = TitleDto.reqeustToDto(request);
+        TitleDto dto = (TitleDto) request.getAttribute("dto");
 
-        if (optDto.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
-
-        int updateCount = service.create(optDto.get());
+        int updateCount = service.create(dto);
 
         if (updateCount != 1) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -38,47 +31,33 @@ public class TitleServlet extends HttpServlet {
         }
 
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().println("Data received successfully.");
+
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 
         List<TitleDto> dtos = service.searchAll();
 
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().println("Data received successfully.");
     }
 
     @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) {
 
-        Optional<TitleDto> optDto = TitleDto.reqeustToDto(request);
+        TitleDto dto = (TitleDto) request.getAttribute("dto");
 
-        if (optDto.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
-
-        int updateCount = service.update(optDto.get());
+        int updateCount = service.update(dto);
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
 
-        Optional<TitleDto> optDto = TitleDto.reqeustToDto(request);
+        TitleDto dto = (TitleDto) request.getAttribute("dto");
 
-        if (optDto.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
-
-        int updateCount = service.delete(optDto.get());
+        int updateCount = service.delete(dto);
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
