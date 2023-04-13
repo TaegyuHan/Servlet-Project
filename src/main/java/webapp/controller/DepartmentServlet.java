@@ -3,12 +3,10 @@ package webapp.controller;
 import webapp.dto.DepartmentDto;
 import webapp.service.DepartmentService;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,9 +21,9 @@ public class DepartmentServlet extends HttpServlet {
 
         DepartmentDto dto = (DepartmentDto) request.getAttribute("dto");
 
-        int updateCount = service.create(dto);
+        Optional<DepartmentDto> optDto = service.create(dto);
 
-        if (updateCount != 1) {
+        if (optDto.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
         }
@@ -57,7 +55,12 @@ public class DepartmentServlet extends HttpServlet {
 
         DepartmentDto dto = (DepartmentDto) request.getAttribute("dto");
 
-        int updateCount = service.update(dto);
+        Optional<DepartmentDto> optDto = service.update(dto);
+
+        if (optDto.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
@@ -68,6 +71,11 @@ public class DepartmentServlet extends HttpServlet {
         DepartmentDto dto = (DepartmentDto) request.getAttribute("dto");
 
         int updateCount = service.delete(dto);
+
+        if (updateCount == 0) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
 
         response.setStatus(HttpServletResponse.SC_OK);
     }

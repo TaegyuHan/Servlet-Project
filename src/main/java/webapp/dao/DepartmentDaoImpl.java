@@ -12,7 +12,7 @@ import java.util.Optional;
 public class DepartmentDaoImpl implements DepartmentDao {
 
     @Override
-    public int create(Department entity) {
+    public Optional<Department> create(Department entity) {
 
         String sql = "INSERT INTO departments (dept_no, dept_name) VALUES (?, ?)";
 
@@ -22,7 +22,13 @@ public class DepartmentDaoImpl implements DepartmentDao {
             pstmt.setString(1, entity.getDeptNo());
             pstmt.setString(2, entity.getDeptName());
 
-            return pstmt.executeUpdate();
+            int insertRow = pstmt.executeUpdate();
+
+            if (insertRow == 0) {
+                return Optional.empty(); // 데이터를 생성하지 못함
+            }
+
+            return Optional.of(entity);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -111,7 +117,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
-    public int update(Department entity) {
+    public Optional<Department> update(Department entity) {
 
         String sql = "UPDATE departments SET dept_name = ? WHERE dept_no = ?";
 
@@ -121,7 +127,13 @@ public class DepartmentDaoImpl implements DepartmentDao {
             pstmt.setString(1, entity.getDeptName());
             pstmt.setString(2, entity.getDeptNo());
 
-            return pstmt.executeUpdate();
+            int insertRow = pstmt.executeUpdate();
+
+            if (insertRow == 0) {
+                return Optional.empty(); // 업데이트 실패
+            }
+
+            return Optional.of(entity);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

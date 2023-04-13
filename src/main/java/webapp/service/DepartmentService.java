@@ -13,9 +13,15 @@ public class DepartmentService {
 
     private final DepartmentDao dao = new DepartmentDaoImpl();
 
-    public int create(DepartmentDto dto) {
-        return dao.create(dtoToEntity(dto));
+    /*  =====================  Create Start  =====================  */
+
+    public Optional<DepartmentDto> create(DepartmentDto dto) {
+        return entityToDto(dao.create(dtoToEntity(dto)));
     }
+
+    /*  =====================  Create End  =====================  */
+
+    /*  =====================  Read Start  =====================  */
 
     public List<DepartmentDto> searchAll() {
         return entitiesToDtos(dao.findAll());
@@ -29,13 +35,26 @@ public class DepartmentService {
         return entityToDto(dao.findByDeptName(deptName));
     }
 
-    public int update(DepartmentDto dto) {
-        return dao.update(dtoToEntity(dto));
+    /*  =====================  Read End  =====================  */
+
+    /*  =====================  Update Start  =====================  */
+
+    public Optional<DepartmentDto> update(DepartmentDto dto) {
+
+        Optional<Department> Optdto = dao.update(dtoToEntity(dto));
+
+        return entityToDto(Optdto);
     }
+
+    /*  =====================  Update End  =====================  */
+
+    /*  =====================  Delete Start  =====================  */
 
     public int delete(DepartmentDto dto) {
         return dao.delete(dtoToEntity(dto));
     }
+
+    /*  =====================  Delete End  =====================  */
 
     private Department dtoToEntity(DepartmentDto dto) {
         return new Department.Builder()
