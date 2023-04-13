@@ -14,9 +14,15 @@ public class DeptManagerService {
 
     private final DeptManagerDao dao = new DeptManagerDaoImpl();
 
-    public int create(DeptManagerDto dto) {
-        return dao.create(dtoToEntity(dto));
+    /*  =====================  Create Start  =====================  */
+
+    public Optional<DeptManagerDto> create(DeptManagerDto dto) {
+        return entityToDto(dao.create(dtoToEntity(dto)));
     }
+
+    /*  =====================  Create End  =====================  */
+
+    /*  =====================  Read Start  =====================  */
 
     public List<DeptManagerDto> searchAll() {
         return entitiesToDtos(dao.findAll());
@@ -34,13 +40,23 @@ public class DeptManagerService {
         return entitiesToDtos(dao.findByDeptNo(deptNo));
     }
 
-    public int update(DeptManagerDto dto) {
-        return dao.update(dtoToEntity(dto));
+    /*  =====================  Read End  =====================  */
+
+    /*  =====================  Update Start  =====================  */
+
+    public Optional<DeptManagerDto> update(DeptManagerDto dto) {
+        return entityToDto(dao.update(dtoToEntity(dto)));
     }
+
+    /*  =====================  Update End  =====================  */
+
+    /*  =====================  Delete Start  =====================  */
 
     public int delete(DeptManagerDto dto) {
         return dao.delete(dtoToEntity(dto));
     }
+
+    /*  =====================  Delete End  =====================  */
 
     private DeptManager dtoToEntity(DeptManagerDto dto) {
         return new DeptManager.Builder()

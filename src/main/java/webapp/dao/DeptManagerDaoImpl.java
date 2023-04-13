@@ -12,7 +12,7 @@ import java.util.Optional;
 public class DeptManagerDaoImpl implements DeptManagerDao {
 
     @Override
-    public int create(DeptManager entity) {
+    public Optional<DeptManager> create(DeptManager entity) {
 
         String sql = "INSERT INTO dept_manager (dept_no, emp_no, from_date, to_date) VALUES (?, ?, ?, ?)";
 
@@ -24,7 +24,13 @@ public class DeptManagerDaoImpl implements DeptManagerDao {
             pstmt.setDate(3, entity.getFromDate());
             pstmt.setDate(4, entity.getToDate());
 
-            return pstmt.executeUpdate();
+            int changeRow = pstmt.executeUpdate();
+
+            if (changeRow == 0) {
+                return Optional.empty(); // 업데이트 실패
+            }
+
+            return Optional.of(entity);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -154,7 +160,7 @@ public class DeptManagerDaoImpl implements DeptManagerDao {
     }
 
     @Override
-    public int update(DeptManager entity) {
+    public Optional<DeptManager> update(DeptManager entity) {
 
         String sql = "UPDATE dept_manager SET from_date = ?, to_date = ? WHERE emp_no = ? AND dept_no = ?";
 
@@ -166,7 +172,13 @@ public class DeptManagerDaoImpl implements DeptManagerDao {
             pstmt.setInt(3, entity.getEmpNo());
             pstmt.setString(4, entity.getDeptNo());
 
-            return pstmt.executeUpdate();
+            int changeRow = pstmt.executeUpdate();
+
+            if (changeRow == 0) {
+                return Optional.empty(); // 업데이트 실패
+            }
+
+            return Optional.of(entity);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

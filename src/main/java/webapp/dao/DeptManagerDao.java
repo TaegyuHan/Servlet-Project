@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface DeptManagerDao {
 
-    int create(DeptManager entity);
+    Optional<DeptManager> create(DeptManager entity);
 
     List<DeptManager> findAll();
 
@@ -18,7 +18,7 @@ public interface DeptManagerDao {
 
     List<DeptManager> findByDeptNo(String deptNo);
 
-    int update(DeptManager entity);
+    Optional<DeptManager> update(DeptManager entity);
 
     int delete(DeptManager entity);
 }
