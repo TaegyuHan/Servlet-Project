@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface SalaryDao {
 
-    int create(Salary entity);
+    Optional<Salary> create(Salary entity);
 
     List<Salary> findAll();
 
@@ -19,7 +19,7 @@ public interface SalaryDao {
 
     List<Salary> findByFromDate(Date fromDate);
 
-    int update(Salary entity);
+    Optional<Salary> update(Salary entity);
 
     int delete(Salary entity);
 }

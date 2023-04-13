@@ -1,15 +1,14 @@
 
 package webapp.controller;
 
+
 import webapp.dto.SalaryDto;
 import webapp.service.SalaryService;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
@@ -26,9 +25,9 @@ public class SalaryServlet extends HttpServlet {
 
         SalaryDto dto = (SalaryDto) request.getAttribute("dto");
 
-        int updateCount = service.create(dto);
+        Optional<SalaryDto> optDto = service.create(dto);
 
-        if (updateCount != 1) {
+        if (optDto.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
         }
@@ -72,7 +71,12 @@ public class SalaryServlet extends HttpServlet {
 
         SalaryDto dto = (SalaryDto) request.getAttribute("dto");
 
-        int updateCount = service.update(dto);
+        Optional<SalaryDto> optDto = service.update(dto);
+
+        if (optDto.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
@@ -83,6 +87,11 @@ public class SalaryServlet extends HttpServlet {
         SalaryDto dto = (SalaryDto) request.getAttribute("dto");
 
         int updateCount = service.delete(dto);
+
+        if (updateCount == 0) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
 
         response.setStatus(HttpServletResponse.SC_OK);
     }

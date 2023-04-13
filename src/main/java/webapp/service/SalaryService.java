@@ -15,9 +15,15 @@ public class SalaryService {
 
     private final SalaryDao dao = new SalaryDaoImpl();
 
-    public int create(SalaryDto dto) {
-        return dao.create(dtoToEntity(dto));
+    /*  =====================  Create Start  =====================  */
+
+    public Optional<SalaryDto> create(SalaryDto dto) {
+        return entityToDto(dao.create(dtoToEntity(dto)));
     }
+
+    /*  =====================  Create End  =====================  */
+
+    /*  =====================  Read Start  =====================  */
 
     public List<SalaryDto> searchAll() {
         return entitiesToDtos(dao.findAll());
@@ -35,13 +41,23 @@ public class SalaryService {
         return entitiesToDtos(dao.findByFromDate(fromDate));
     }
 
-    public int update(SalaryDto dto) {
-        return dao.update(dtoToEntity(dto));
+    /*  =====================  Read End  =====================  */
+
+    /*  =====================  Update Start  =====================  */
+
+    public Optional<SalaryDto> update(SalaryDto dto) {
+        return entityToDto(dao.update(dtoToEntity(dto)));
     }
+
+    /*  =====================  Update End  =====================  */
+
+    /*  =====================  Delete Start  =====================  */
 
     public int delete(SalaryDto dto) {
         return dao.delete(dtoToEntity(dto));
     }
+
+    /*  =====================  Delete End  =====================  */
 
     private Salary dtoToEntity(SalaryDto dto) {
         return new Salary.Builder()

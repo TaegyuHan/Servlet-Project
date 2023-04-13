@@ -12,19 +12,25 @@ import java.util.Optional;
 public class SalaryDaoImpl implements SalaryDao {
 
     @Override
-    public int create(Salary salary) {
+    public Optional<Salary> create(Salary entity) {
 
         String sql = "INSERT INTO salaries (emp_no, salary, from_date, to_date) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = MariaDBConnectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, salary.getEmpNo());
-            pstmt.setInt(2, salary.getSalary());
-            pstmt.setDate(3, salary.getFromDate());
-            pstmt.setDate(4, salary.getToDate());
+            pstmt.setInt(1, entity.getEmpNo());
+            pstmt.setInt(2, entity.getSalary());
+            pstmt.setDate(3, entity.getFromDate());
+            pstmt.setDate(4, entity.getToDate());
 
-            return pstmt.executeUpdate();
+            int changeRow = pstmt.executeUpdate();
+
+            if (changeRow == 0) {
+                return Optional.empty(); // 업데이트 실패
+            }
+
+            return Optional.of(entity);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -155,7 +161,7 @@ public class SalaryDaoImpl implements SalaryDao {
     }
 
     @Override
-    public int update(Salary entity) {
+    public Optional<Salary> update(Salary entity) {
 
         String sql = "UPDATE salaries SET salary = ?, to_date = ? WHERE emp_no = ? AND from_date = ?";
 
@@ -167,7 +173,13 @@ public class SalaryDaoImpl implements SalaryDao {
             pstmt.setInt(3, entity.getEmpNo());
             pstmt.setDate(4, entity.getFromDate());
 
-            return pstmt.executeUpdate();
+            int changeRow = pstmt.executeUpdate();
+
+            if (changeRow == 0) {
+                return Optional.empty(); // 업데이트 실패
+            }
+
+            return Optional.of(entity);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
