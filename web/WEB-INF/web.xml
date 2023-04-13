@@ -9,7 +9,7 @@
     <!-- /v1/employees -->
     <filter>
         <filter-name>EmployeeFilter</filter-name>
-        <filter-class>webapp.filter.EmployeeFilter</filter-class>
+        <filter-class>webapp.filter.dto.EmployeeFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>EmployeeFilter</filter-name>
@@ -19,7 +19,7 @@
     <!-- /v1/department -->
     <filter>
         <filter-name>DepartmentFilter</filter-name>
-        <filter-class>webapp.filter.DepartmentFilter</filter-class>
+        <filter-class>webapp.filter.dto.DepartmentFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>DepartmentFilter</filter-name>
@@ -29,7 +29,7 @@
     <!-- /v1/dept-emp -->
     <filter>
         <filter-name>DepEmpFilter</filter-name>
-        <filter-class>webapp.filter.DepEmpFilter</filter-class>
+        <filter-class>webapp.filter.dto.DepEmpFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>DepEmpFilter</filter-name>
@@ -39,7 +39,7 @@
     <!-- /v1/dept-manager -->
     <filter>
         <filter-name>DeptManagerFilter</filter-name>
-        <filter-class>webapp.filter.DeptManagerFilter</filter-class>
+        <filter-class>webapp.filter.dto.DeptManagerFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>DeptManagerFilter</filter-name>
@@ -49,7 +49,7 @@
     <!-- /v1/salary -->
     <filter>
         <filter-name>SalaryFilter</filter-name>
-        <filter-class>webapp.filter.SalaryFilter</filter-class>
+        <filter-class>webapp.filter.dto.SalaryFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>SalaryFilter</filter-name>
@@ -59,7 +59,7 @@
     <!-- /v1/title -->
     <filter>
         <filter-name>TitleFilter</filter-name>
-        <filter-class>webapp.filter.TitleFilter</filter-class>
+        <filter-class>webapp.filter.dto.TitleFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>TitleFilter</filter-name>
