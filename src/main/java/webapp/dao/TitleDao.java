@@ -4,10 +4,11 @@ import webapp.entity.Title;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface TitleDao {
 
-    int create(Title title);
+    Optional<Title> create(Title title);
 
     List<Title> findAll();
 
@@ -17,7 +18,7 @@ public interface TitleDao {
 
     List<Title> findByFromDate(Date toDate);
 
-    int update(Title title);
+    Optional<Title> update(Title title);
 
     int delete(Title title);
 }

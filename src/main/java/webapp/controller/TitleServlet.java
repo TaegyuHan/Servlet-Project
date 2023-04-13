@@ -4,13 +4,13 @@ package webapp.controller;
 import webapp.dto.TitleDto;
 import webapp.service.TitleService;
 
-import javax.servlet.ServletException;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 
 @WebServlet("/v1/title")
@@ -23,9 +23,9 @@ public class TitleServlet extends HttpServlet {
 
         TitleDto dto = (TitleDto) request.getAttribute("dto");
 
-        int updateCount = service.create(dto);
+        Optional<TitleDto> optDto = service.create(dto);
 
-        if (updateCount != 1) {
+        if (optDto.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
         }
@@ -47,7 +47,12 @@ public class TitleServlet extends HttpServlet {
 
         TitleDto dto = (TitleDto) request.getAttribute("dto");
 
-        int updateCount = service.update(dto);
+        Optional<TitleDto> optDto = service.update(dto);
+
+        if (optDto.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
@@ -58,6 +63,11 @@ public class TitleServlet extends HttpServlet {
         TitleDto dto = (TitleDto) request.getAttribute("dto");
 
         int updateCount = service.delete(dto);
+
+        if (updateCount == 0) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
 
         response.setStatus(HttpServletResponse.SC_OK);
     }

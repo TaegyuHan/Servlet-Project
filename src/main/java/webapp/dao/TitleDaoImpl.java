@@ -7,11 +7,12 @@ import java.sql.*;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TitleDaoImpl implements TitleDao {
 
     @Override
-    public int create(Title entity) {
+    public Optional<Title> create(Title entity) {
 
         String sql = "INSERT INTO titles (emp_no, title, from_date, to_date) VALUES (?, ?, ?, ?)";
 
@@ -23,7 +24,13 @@ public class TitleDaoImpl implements TitleDao {
             pstmt.setDate(3, entity.getFromDate());
             pstmt.setDate(4, entity.getToDate());
 
-            return pstmt.executeUpdate();
+            int changeRow = pstmt.executeUpdate();
+
+            if (changeRow == 0) {
+                return Optional.empty(); // 업데이트 실패
+            }
+
+            return Optional.of(entity);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -156,7 +163,7 @@ public class TitleDaoImpl implements TitleDao {
     }
 
     @Override
-    public int update(Title entity) {
+    public Optional<Title> update(Title entity) {
 
         String sql = "UPDATE titles SET to_date = ? WHERE emp_no = ? AND title = ? AND from_date = ?";
 
@@ -168,7 +175,13 @@ public class TitleDaoImpl implements TitleDao {
             pstmt.setString(3, entity.getTitle());
             pstmt.setDate(4, entity.getFromDate());
 
-            return pstmt.executeUpdate();
+            int changeRow = pstmt.executeUpdate();
+
+            if (changeRow == 0) {
+                return Optional.empty(); // 업데이트 실패
+            }
+
+            return Optional.of(entity);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

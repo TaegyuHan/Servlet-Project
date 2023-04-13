@@ -7,27 +7,44 @@ import webapp.entity.Title;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class TitleService {
 
     private final TitleDao dao = new TitleDaoImpl();
 
-    public int create(TitleDto dto) {
-        return dao.create(dtoToEntity(dto));
+    /*  =====================  Create Start  =====================  */
+
+    public Optional<TitleDto> create(TitleDto dto) {
+        return entityToDto(dao.create(dtoToEntity(dto)));
     }
+
+    /*  =====================  Create End  =====================  */
+
+    /*  =====================  Read Start  =====================  */
 
     public List<TitleDto> searchAll() {
         return entitiesToDtos(dao.findAll());
     }
 
-    public int update(TitleDto dto) {
-        return dao.update(dtoToEntity(dto));
+    /*  =====================  Read End  =====================  */
+
+    /*  =====================  Update Start  =====================  */
+
+    public Optional<TitleDto> update(TitleDto dto) {
+        return entityToDto(dao.update(dtoToEntity(dto)));
     }
+
+    /*  =====================  Update End  =====================  */
+
+    /*  =====================  Delete Start  =====================  */
 
     public int delete(TitleDto dto) {
         return dao.delete(dtoToEntity(dto));
     }
+
+    /*  =====================  Delete End  =====================  */
 
     private Title dtoToEntity(TitleDto dto) {
         return new Title.Builder()
@@ -56,5 +73,11 @@ public class TitleService {
                 .fromDate(entity.getFromDate())
                 .toDate(entity.getToDate())
                 .build();
+    }
+
+    private Optional<TitleDto> entityToDto(Optional<Title> optEntity) {
+        return Optional.ofNullable(
+                entityToDto(optEntity.get())
+        );
     }
 }
