@@ -8,13 +8,13 @@ import java.util.Optional;
 
 public interface EmployeeDao {
 
-    int create(Employee entity);
+    Optional<Employee> create(Employee entity);
 
     List<Employee> findAll();
 
     Optional<Employee> findByEmpNo(int id);
 
-    int update(Employee entity);
+    Optional<Employee> update(Employee entity);
 
     int delete(Employee entity);
 }

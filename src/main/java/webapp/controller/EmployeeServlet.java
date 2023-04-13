@@ -23,7 +23,12 @@ public class EmployeeServlet extends HttpServlet {
 
         EmployeeDto dto = (EmployeeDto) request.getAttribute("dto");
 
-        dto = service.create(dto);
+        Optional<EmployeeDto> optDto = service.create(dto);
+
+        if (optDto.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
@@ -49,7 +54,12 @@ public class EmployeeServlet extends HttpServlet {
 
         EmployeeDto dto = (EmployeeDto) request.getAttribute("dto");
 
-        int updateCount = service.update(dto);
+        Optional<EmployeeDto> optDto = service.update(dto);
+
+        if (optDto.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
@@ -60,6 +70,11 @@ public class EmployeeServlet extends HttpServlet {
         EmployeeDto dto = (EmployeeDto) request.getAttribute("dto");
 
         int updateCount = service.delete(dto);
+
+        if (updateCount == 0) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
 
         response.setStatus(HttpServletResponse.SC_OK);
     }

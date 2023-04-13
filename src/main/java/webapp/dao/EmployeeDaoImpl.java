@@ -13,21 +13,27 @@ import java.util.Optional;
 public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
-    public int create(Employee employee) {
+    public Optional<Employee> create(Employee entity) {
 
         String sql = "INSERT INTO employees (birth_date, first_name, last_name, gender, hire_date) " +
                 "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = MariaDBConnectionPool.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setDate(1, employee.getBirthDate());
-            pstmt.setString(2, employee.getFirstName());
-            pstmt.setString(3, employee.getLastName());
-            pstmt.setString(4, employee.getGender().name());
-            pstmt.setDate(5, employee.getHireDate());
+            pstmt.setDate(1, entity.getBirthDate());
+            pstmt.setString(2, entity.getFirstName());
+            pstmt.setString(3, entity.getLastName());
+            pstmt.setString(4, entity.getGender().name());
+            pstmt.setDate(5, entity.getHireDate());
 
-            return pstmt.executeUpdate();
+            int changeRow = pstmt.executeUpdate();
+
+            if (changeRow == 0) {
+                return Optional.empty(); // 업데이트 실패
+            }
+
+            return Optional.of(entity);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -99,7 +105,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public int update(Employee entity) {
+    public Optional<Employee> update(Employee entity) {
 
         String sql = "UPDATE employees " +
                 "SET birth_date = ?, " +
@@ -119,7 +125,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
             pstmt.setDate(5, entity.getHireDate());
             pstmt.setInt(6, entity.getEmpNo());
 
-            return pstmt.executeUpdate();
+            int changeRow = pstmt.executeUpdate();
+
+            if (changeRow == 0) {
+                return Optional.empty(); // 업데이트 실패
+            }
+
+            return Optional.of(entity);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

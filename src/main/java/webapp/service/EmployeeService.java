@@ -14,9 +14,15 @@ public class EmployeeService {
 
     private final EmployeeDao dao = new EmployeeDaoImpl();
 
-    public int create(EmployeeDto dto) {
-        return dao.create(dtoToEntity(dto));
+    /*  =====================  Create Start  =====================  */
+
+    public Optional<EmployeeDto> create(EmployeeDto dto) {
+        return entityToDto(dao.create(dtoToEntity(dto)));
     }
+
+    /*  =====================  Create End  =====================  */
+
+    /*  =====================  Read Start  =====================  */
 
     public List<EmployeeDto> searchAll() {
         return entitiesToDtos(dao.findAll());
@@ -26,13 +32,23 @@ public class EmployeeService {
         return entityToDto(dao.findByEmpNo(empNo));
     }
 
-    public int update(EmployeeDto dto) {
-        return dao.update(dtoToEntity(dto));
+    /*  =====================  Read End  =====================  */
+
+    /*  =====================  Update Start  =====================  */
+
+    public Optional<EmployeeDto> update(EmployeeDto dto) {
+        return entityToDto(dao.update(dtoToEntity(dto)));
     }
+
+    /*  =====================  Update End  =====================  */
+
+    /*  =====================  Delete Start  =====================  */
 
     public int delete(EmployeeDto dto) {
         return dao.delete(dtoToEntity(dto));
     }
+
+    /*  =====================  Delete End  =====================  */
 
     public Employee dtoToEntity(EmployeeDto dto) {
         return new Employee.Builder()
