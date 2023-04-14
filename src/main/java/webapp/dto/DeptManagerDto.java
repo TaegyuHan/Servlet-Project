@@ -138,8 +138,18 @@ public class DeptManagerDto {
             return this;
         }
 
+        public DeptManagerDto.Builder fromDate(String fromDate) {
+            entity.setFromDate(fromDate);
+            return this;
+        }
+
         public DeptManagerDto.Builder fromDate(Date fromDate) {
             entity.setFromDate(fromDate);
+            return this;
+        }
+
+        public DeptManagerDto.Builder toDate(String toDate) {
+            entity.setToDate(toDate);
             return this;
         }
 
