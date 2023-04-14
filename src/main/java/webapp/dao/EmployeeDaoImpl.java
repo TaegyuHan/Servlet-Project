@@ -33,6 +33,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 return Optional.empty(); // 업데이트 실패
             }
 
+            ResultSet generatedKeys = pstmt.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+                entity.setEmpNo(generatedKeys.getInt(1));
+            }
+
             return Optional.of(entity);
 
         } catch (SQLException e) {
