@@ -67,14 +67,14 @@ public class TitleDaoImpl implements TitleDao {
     }
 
     @Override
-    public List<Title> findByEmpNo(Date fromDate) {
+    public List<Title> findByEmpNo(int empNo) {
 
         String sql = "SELECT * FROM titles WHERE emp_no = ?";
 
         try (Connection conn = MariaDBConnectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setDate(1, fromDate);
+            pstmt.setInt(1, empNo);
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -131,7 +131,7 @@ public class TitleDaoImpl implements TitleDao {
     }
 
     @Override
-    public List<Title> findByFromDate(Date toDate) {
+    public List<Title> findByToDate(Date toDate) {
 
         String sql = "SELECT * FROM titles WHERE to_date = ?";
 
@@ -156,6 +156,70 @@ public class TitleDaoImpl implements TitleDao {
             }
 
             return titles;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Title> findByFromDate(Date fromDate) {
+
+        String sql = "SELECT * FROM titles WHERE from_date = ?";
+
+        try (Connection conn = MariaDBConnectionPool.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            List<Title> titles = new ArrayList<>();
+
+            pstmt.setDate(1, fromDate);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                titles.add(
+                        new Title.Builder()
+                                .empNo(rs.getInt("emp_no"))
+                                .title(rs.getString("title"))
+                                .fromDate(rs.getDate("from_date"))
+                                .toDate(rs.getDate("to_date"))
+                                .build()
+                );
+            }
+
+            return titles;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Optional<Title> findByEmpNoAndTitleAndFromDate(int empNo, String title, Date fromDate) {
+
+        String sql = "SELECT * FROM titles WHERE emp_no = ? AND title = ? AND from_date = ?";
+
+        try (Connection conn = MariaDBConnectionPool.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, empNo);
+            pstmt.setString(2, title);
+            pstmt.setDate(3, fromDate);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return Optional.of(
+                        new Title.Builder()
+                                .empNo(rs.getInt("emp_no"))
+                                .title(rs.getString("title"))
+                                .fromDate(rs.getDate("from_date"))
+                                .toDate(rs.getDate("to_date"))
+                                .build()
+                );
+            }
+
+            return Optional.empty();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
