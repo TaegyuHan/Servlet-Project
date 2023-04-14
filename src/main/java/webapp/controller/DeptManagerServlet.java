@@ -39,28 +39,22 @@ public class DeptManagerServlet extends HttpServlet {
         Optional<String> optDeptNo = Optional.ofNullable(request.getParameter("dept_no"));
 
         if (optEmpNo.isEmpty() && optDeptNo.isEmpty()) {
-
             List<DeptManagerDto> dtos = service.searchAll();
-
-            System.out.println(dtos.toString());
 
         } else if (optEmpNo.isPresent() && optDeptNo.isPresent()) {
             int empNo = Integer.parseInt(optEmpNo.get());
             Optional<DeptManagerDto> dto = service.searchByEmpNoAndDeptNo(empNo, optDeptNo.get());
 
-            System.out.println(dto.get());
-
         } else if (optEmpNo.isPresent()) {
             int empNo = Integer.parseInt(optEmpNo.get());
             List<DeptManagerDto> dtos = service.searchByEmpNo(empNo);
 
-            System.out.println(dtos.toString());
-
         } else if (optDeptNo.isPresent()) {
             List<DeptManagerDto> dtos = service.searchByDeptNo(optDeptNo.get());
 
-            System.out.println(dtos.toString());
         }
+
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override

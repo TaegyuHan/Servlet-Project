@@ -3,7 +3,7 @@ package webapp.controller;
 import webapp.dto.EmployeeDto;
 import webapp.service.EmployeeService;
 
-import javax.servlet.ServletException;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
