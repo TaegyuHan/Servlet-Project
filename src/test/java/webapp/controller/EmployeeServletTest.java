@@ -4,22 +4,24 @@ import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import webapp.dto.DepartmentDto;
-import webapp.service.DepartmentService;
+import webapp.dto.EmployeeDto;
+import webapp.service.EmployeeService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.sql.Date;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class) // 순서 대로 코딩
-class DepartmentServletTest {
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class) // 순서 대로 코
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) // 기존에 실행한 Test의 저장 변수 다른 곳에서도 실행// 딩
+class EmployeeServletTest {
 
     @Mock
-    private DepartmentService service;
+    private EmployeeService service;
 
     @Mock
     private HttpServletRequest request;
@@ -28,7 +30,7 @@ class DepartmentServletTest {
     private HttpServletResponse response;
 
     @InjectMocks
-    private DepartmentServlet servlet;
+    private EmployeeServlet servlet;
 
     @BeforeEach
     void setUp() {
@@ -41,9 +43,12 @@ class DepartmentServletTest {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
 
-        DepartmentDto dto = new DepartmentDto.Builder()
-                .deptNo("d010")
-                .deptName("new Marketing")
+        EmployeeDto dto = new EmployeeDto.Builder()
+                .birthDate("2023-04-15")
+                .firstName("Alice")
+                .lastName("Lee")
+                .gender("F")
+                .hireDate("2023-04-15")
                 .build();
 
         when(request.getAttribute("dto")).thenReturn(dto);
@@ -67,18 +72,23 @@ class DepartmentServletTest {
 
     @Test
     @Order(3)
-    void doGet_searchByDeptNo() {
+    void doGet_searchByEmpNo() {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
 
-        when(request.getParameter("dept_no")).thenReturn("d010");
+        int empNo = 10_002;
 
-        DepartmentDto dto = new DepartmentDto.Builder()
-                .deptNo("d010")
-                .deptName("new Marketing")
+        EmployeeDto dto = new EmployeeDto.Builder()
+                .empNo(empNo)
+                .birthDate(Date.valueOf("1952-09-02"))
+                .firstName("Georgi")
+                .lastName("Facello")
+                .gender("M")
+                .hireDate(Date.valueOf("1986-06-26"))
                 .build();
 
-        when(service.searchByDeptNo("d010")).thenReturn(Optional.of(dto));
+        when(request.getParameter("emp_no")).thenReturn(String.valueOf(empNo));
+        when(service.searchByEmpNo(empNo)).thenReturn(Optional.of(dto));
 
         servlet.doGet(request, response);
 
@@ -87,33 +97,19 @@ class DepartmentServletTest {
 
     @Test
     @Order(4)
-    void doGet_searchByDeptName() {
+    void doPut() throws Exception {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
 
-        when(request.getParameter("dept_name")).thenReturn("Marketing");
+        int empNo = 10_002;
 
-        DepartmentDto dto = new DepartmentDto.Builder()
-                .deptNo("d010")
-                .deptName("new Marketing")
-                .build();
-
-        when(service.searchByDeptName("new Marketing")).thenReturn(Optional.of(dto));
-
-        servlet.doGet(request, response);
-
-        verify(response).setStatus(HttpServletResponse.SC_OK);
-    }
-
-    @Test
-    @Order(5)
-    void testDoPut() {
-        request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
-
-        DepartmentDto dto = new DepartmentDto.Builder()
-                .deptNo("d010")
-                .deptName("update Marketing")
+        EmployeeDto dto = new EmployeeDto.Builder()
+                .empNo(empNo)
+                .birthDate(Date.valueOf("1952-09-02"))
+                .firstName("Alice")
+                .lastName("Lee")
+                .gender("F")
+                .hireDate("2023-04-15")
                 .build();
 
         when(request.getAttribute("dto")).thenReturn(dto);
@@ -125,20 +121,27 @@ class DepartmentServletTest {
     }
 
     @Test
-    @Order(6)
-    void testDoDelete() {
+    @Order(5)
+    void doDelete() throws Exception {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
 
-        DepartmentDto dto = new DepartmentDto.Builder()
-                .deptNo("d010")
-                .deptName("update Marketing")
+        int empNo = 10_002;
+
+        EmployeeDto dto = new EmployeeDto.Builder()
+                .empNo(empNo)
+                .firstName("Alice")
+                .lastName("Lee")
+                .gender("F")
+                .hireDate("2023-04-15")
                 .build();
 
         when(request.getAttribute("dto")).thenReturn(dto);
-        when(service.delete(dto)).thenReturn(1);
+        when(service.delete(dto)).thenReturn(empNo);
 
         servlet.doDelete(request, response);
+
+        service.create(dto);
 
         verify(response).setStatus(HttpServletResponse.SC_OK);
     }

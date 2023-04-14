@@ -4,22 +4,23 @@ import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import webapp.dto.DepartmentDto;
-import webapp.service.DepartmentService;
+import webapp.dto.DeptEmpDto;
+import webapp.service.DeptEmpService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class) // 순서 대로 코딩
-class DepartmentServletTest {
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+class DepEmpServletTest {
 
     @Mock
-    private DepartmentService service;
+    private DeptEmpService service;
 
     @Mock
     private HttpServletRequest request;
@@ -28,7 +29,7 @@ class DepartmentServletTest {
     private HttpServletResponse response;
 
     @InjectMocks
-    private DepartmentServlet servlet;
+    private DepEmpServlet servlet;
 
     @BeforeEach
     void setUp() {
@@ -41,9 +42,11 @@ class DepartmentServletTest {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
 
-        DepartmentDto dto = new DepartmentDto.Builder()
-                .deptNo("d010")
-                .deptName("new Marketing")
+        DeptEmpDto dto = new DeptEmpDto.Builder()
+                .empNo(10003)
+                .deptNo("d001")
+                .fromDate("2023-04-15")
+                .toDate("2023-04-20")
                 .build();
 
         when(request.getAttribute("dto")).thenReturn(dto);
@@ -67,18 +70,21 @@ class DepartmentServletTest {
 
     @Test
     @Order(3)
-    void doGet_searchByDeptNo() {
+    void doGet_searchByEmpNoAndDeptNo() {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
 
-        when(request.getParameter("dept_no")).thenReturn("d010");
+        when(request.getParameter("emp_no")).thenReturn("10003");
+        when(request.getParameter("dept_no")).thenReturn("d001");
 
-        DepartmentDto dto = new DepartmentDto.Builder()
-                .deptNo("d010")
-                .deptName("new Marketing")
+        DeptEmpDto dto = new DeptEmpDto.Builder()
+                .empNo(10003)
+                .deptNo("d001")
+                .fromDate("2023-04-15")
+                .toDate("2023-04-20")
                 .build();
 
-        when(service.searchByDeptNo("d010")).thenReturn(Optional.of(dto));
+        when(service.searchByEmpNoAndDeptNo(10003, "d001")).thenReturn(Optional.of(dto));
 
         servlet.doGet(request, response);
 
@@ -87,18 +93,11 @@ class DepartmentServletTest {
 
     @Test
     @Order(4)
-    void doGet_searchByDeptName() {
+    void doGet_searchByEmpNo() {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
 
-        when(request.getParameter("dept_name")).thenReturn("Marketing");
-
-        DepartmentDto dto = new DepartmentDto.Builder()
-                .deptNo("d010")
-                .deptName("new Marketing")
-                .build();
-
-        when(service.searchByDeptName("new Marketing")).thenReturn(Optional.of(dto));
+        when(request.getParameter("emp_no")).thenReturn("10003");
 
         servlet.doGet(request, response);
 
@@ -107,13 +106,28 @@ class DepartmentServletTest {
 
     @Test
     @Order(5)
+    void doGet_searchByDeptNo() {
+        request = mock(HttpServletRequest.class);
+        response = mock(HttpServletResponse.class);
+
+        when(request.getParameter("dept_no")).thenReturn("d001");
+
+        servlet.doGet(request, response);
+
+        verify(response).setStatus(HttpServletResponse.SC_OK);
+    }
+
+    @Test
+    @Order(6)
     void testDoPut() {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
 
-        DepartmentDto dto = new DepartmentDto.Builder()
-                .deptNo("d010")
-                .deptName("update Marketing")
+        DeptEmpDto dto = new DeptEmpDto.Builder()
+                .empNo(10003)
+                .deptNo("d001")
+                .fromDate("2023-04-15")
+                .toDate("2023-12-20")
                 .build();
 
         when(request.getAttribute("dto")).thenReturn(dto);
@@ -125,14 +139,16 @@ class DepartmentServletTest {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     void testDoDelete() {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
 
-        DepartmentDto dto = new DepartmentDto.Builder()
-                .deptNo("d010")
-                .deptName("update Marketing")
+        DeptEmpDto dto = new DeptEmpDto.Builder()
+                .empNo(10003)
+                .deptNo("d001")
+                .fromDate("2023-04-15")
+                .toDate("2023-12-20")
                 .build();
 
         when(request.getAttribute("dto")).thenReturn(dto);
