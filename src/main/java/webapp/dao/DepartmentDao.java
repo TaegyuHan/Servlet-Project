@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface DepartmentDao {
 
-    Optional<Department> create(Department department);
+    Optional<Department> create(Department entity);
 
     List<Department> findAll();
 
@@ -15,7 +15,7 @@ public interface DepartmentDao {
 
     Optional<Department> findByDeptName(String deptName);
 
-    Optional<Department> update(Department department);
+    Optional<Department> update(Department entity);
 
-    int delete(Department department);
+    int delete(Department entity);
 }

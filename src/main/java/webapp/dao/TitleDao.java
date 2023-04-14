@@ -8,17 +8,21 @@ import java.util.Optional;
 
 public interface TitleDao {
 
-    Optional<Title> create(Title title);
+    Optional<Title> create(Title entity);
 
     List<Title> findAll();
 
-    List<Title> findByEmpNo(Date fromDate);
+    List<Title> findByEmpNo(int empNo);
 
     List<Title> findByTitle(String title);
 
-    List<Title> findByFromDate(Date toDate);
+    List<Title> findByToDate(Date toDate);
 
-    Optional<Title> update(Title title);
+    List<Title> findByFromDate(Date fromDate);
 
-    int delete(Title title);
+    Optional<Title> findByEmpNoAndTitleAndFromDate(int empNo, String title, Date fromDate);
+
+    Optional<Title> update(Title entity);
+
+    int delete(Title entity);
 }
