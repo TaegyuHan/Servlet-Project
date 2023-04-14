@@ -5,6 +5,7 @@ import webapp.dao.TitleDaoImpl;
 import webapp.dto.TitleDto;
 import webapp.entity.Title;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,22 @@ public class TitleService {
 
     public List<TitleDto> searchAll() {
         return entitiesToDtos(dao.findAll());
+    }
+
+    public List<TitleDto> searchByEmpNo(int empNo) {
+        return entitiesToDtos(dao.findByEmpNo(empNo));
+    }
+
+    public List<TitleDto> searchTitle(String title) {
+        return entitiesToDtos(dao.findByTitle(title));
+    }
+
+    public List<TitleDto> searchByToDate(Date toDate) {
+        return entitiesToDtos(dao.findByToDate(toDate));
+    }
+
+    public List<TitleDto> searchByFromDate(Date fromDate) {
+        return entitiesToDtos(dao.findByFromDate(fromDate));
     }
 
     /*  =====================  Read End  =====================  */
