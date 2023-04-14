@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,10 +41,7 @@ public class SalaryServlet extends HttpServlet {
         Optional<String> optFromDate = Optional.ofNullable(request.getParameter("from_date"));
 
         if (optEmpNo.isEmpty() && optFromDate.isEmpty()) {
-
             List<SalaryDto> dtos = service.searchAll();
-
-            System.out.println(Arrays.toString(dtos.toArray()));
 
         } else if (optEmpNo.isPresent() && optFromDate.isPresent()) {
             int empNo = Integer.parseInt(optEmpNo.get());
@@ -56,14 +52,12 @@ public class SalaryServlet extends HttpServlet {
             int empNo = Integer.parseInt(optEmpNo.get());
             List<SalaryDto> dto = service.searchByEmpNo(empNo);
 
-            System.out.println(dto.toString());
-
         } else if (optFromDate.isPresent()) {
             Date fromDate = Date.valueOf(optFromDate.get());
             List<SalaryDto> dto = service.searchByFromDate(fromDate);
-
-            System.out.println(dto.toString());
         }
+
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
