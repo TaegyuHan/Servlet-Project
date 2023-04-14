@@ -40,10 +40,7 @@ public class DepartmentService {
     /*  =====================  Update Start  =====================  */
 
     public Optional<DepartmentDto> update(DepartmentDto dto) {
-
-        Optional<Department> Optdto = dao.update(dtoToEntity(dto));
-
-        return entityToDto(Optdto);
+        return entityToDto(dao.update(dtoToEntity(dto)));
     }
 
     /*  =====================  Update End  =====================  */
