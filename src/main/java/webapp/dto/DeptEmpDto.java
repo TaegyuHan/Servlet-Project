@@ -1,6 +1,7 @@
 package webapp.dto;
 
 import java.sql.Date;
+import java.util.Objects;
 
 
 public class DeptEmpDto {
@@ -105,6 +106,22 @@ public class DeptEmpDto {
                 ", fromDate=" + fromDate +
                 ", toDate=" + toDate +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DeptEmpDto that = (DeptEmpDto) o;
+        return empNo == that.empNo &&
+                Objects.equals(deptNo, that.deptNo) &&
+                Objects.equals(fromDate, that.fromDate) &&
+                Objects.equals(toDate, that.toDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(empNo, deptNo, fromDate, toDate);
     }
 
     public static class Builder {

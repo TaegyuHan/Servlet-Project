@@ -1,6 +1,9 @@
 package webapp.dto;
 
 
+import java.util.Objects;
+
+
 public class DepartmentDto {
 
     private String deptNo;
@@ -49,6 +52,20 @@ public class DepartmentDto {
                 "deptNo='" + deptNo + '\'' +
                 ", deptName='" + deptName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DepartmentDto that = (DepartmentDto) o;
+        return Objects.equals(deptNo, that.deptNo) &&
+                Objects.equals(deptName, that.deptName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(deptNo, deptName);
     }
 
     public static class Builder {

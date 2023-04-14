@@ -3,6 +3,7 @@ package webapp.dto;
 import webapp.entity.Gender;
 
 import java.sql.Date;
+import java.util.Objects;
 
 
 public class EmployeeDto {
@@ -150,6 +151,24 @@ public class EmployeeDto {
                 ", gender=" + gender +
                 ", hireDate=" + hireDate +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmployeeDto that = (EmployeeDto) o;
+        return empNo == that.empNo &&
+                Objects.equals(birthDate, that.birthDate) &&
+                Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName) &&
+                gender == that.gender &&
+                Objects.equals(hireDate, that.hireDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(empNo, birthDate, firstName, lastName, gender, hireDate);
     }
 
     public static class Builder {

@@ -1,6 +1,8 @@
 package webapp.entity;
 
 import java.sql.Date;
+import java.util.Objects;
+
 
 public class Title {
 
@@ -51,6 +53,22 @@ public class Title {
                 ", fromDate=" + fromDate +
                 ", toDate=" + toDate +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Title that = (Title) o;
+        return Objects.equals(this.empNo, that.empNo) &&
+                Objects.equals(this.title, that.title) &&
+                Objects.equals(this.fromDate, that.fromDate) &&
+                Objects.equals(this.toDate, that.toDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(empNo, title, fromDate, toDate);
     }
 
     public static class Builder {

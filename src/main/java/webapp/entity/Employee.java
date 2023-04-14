@@ -1,6 +1,8 @@
 package webapp.entity;
 
 import java.sql.Date;
+import java.util.Objects;
+
 
 public class Employee {
 
@@ -11,7 +13,7 @@ public class Employee {
     private Gender gender;
     private Date hireDate;
 
-    public Employee() {};
+    public Employee() {}
 
     public int getEmpNo() {
         return empNo;
@@ -72,6 +74,25 @@ public class Employee {
                 ", hireDate=" + hireDate +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee that = (Employee) o;
+        return this.empNo == that.empNo &&
+                Objects.equals(this.birthDate, that.birthDate) &&
+                Objects.equals(this.firstName, that.firstName) &&
+                Objects.equals(this.lastName, that.lastName) &&
+                this.gender == that.gender &&
+                Objects.equals(this.hireDate, that.hireDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.empNo, this.birthDate, this.firstName, this.lastName, this.gender, this.hireDate);
+    }
+
 
     public static class Builder {
 

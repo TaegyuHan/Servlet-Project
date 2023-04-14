@@ -164,16 +164,16 @@ public class DeptEmpDaoImpl implements DeptEmpDao {
     @Override
     public Optional<DeptEmp> update(DeptEmp entity) {
 
-        String sql = "UPDATE dept_emp SET dept_no = ?, from_date = ?, to_date = ? "
-                + "WHERE emp_no = ?";
+        String sql = "UPDATE dept_emp SET from_date = ?, to_date = ? "
+                + "WHERE emp_no = ? AND dept_no = ?";
 
         try (Connection conn = MariaDBConnectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, entity.getDeptNo());
-            pstmt.setDate(2, entity.getFromDate());
-            pstmt.setDate(3, entity.getToDate());
-            pstmt.setInt(4, entity.getEmpNo());
+            pstmt.setDate(1, entity.getFromDate());
+            pstmt.setDate(2, entity.getToDate());
+            pstmt.setInt(3, entity.getEmpNo());
+            pstmt.setString(4, entity.getDeptNo());
 
             int changeRow = pstmt.executeUpdate();
 

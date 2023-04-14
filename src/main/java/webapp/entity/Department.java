@@ -1,5 +1,8 @@
 package webapp.entity;
 
+import java.util.Objects;
+
+
 public class Department {
 
     private String deptNo;
@@ -30,6 +33,20 @@ public class Department {
                 "deptNo='" + deptNo + '\'' +
                 ", deptName='" + deptName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Department that = (Department) o;
+        return Objects.equals(this.deptNo, that.deptNo) &&
+                Objects.equals(this.deptName, that.deptName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.deptNo, this.deptName);
     }
 
     public static class Builder {
